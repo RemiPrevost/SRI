@@ -1,4 +1,8 @@
 import com.google.gson.Gson;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.MongoClient;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -22,11 +26,18 @@ public class Main {
     public static void main(String[] args) throws IOException {
         File[] files = findHtmls("data/CORPUS/");
         File bad_words_file = new File("data/bad_words");
+        MongoClient mongoClient = new MongoClient();
+        DB db = mongoClient.getDB("DBindex");
+        DBCollection coll = db.getCollection("tokens");
+
+        BasicDBObject doc_test = new BasicDBObject("name", "test")
+                .append("surname","coucou");
+        coll.insert(doc_test);
 
         List<String> bad_words = new ArrayList<>();
         List<Elements> balises = new ArrayList<>();
         List<String> inner_elements = new ArrayList<>();
-        List<String> tokens = new ArrayList<>();
+        List<Token> tokens = new ArrayList<>();
 
         String[] tab_words;
         String json;
@@ -76,14 +87,18 @@ public class Main {
                                 }
                             }
                             if (!found) {
-                                tokens.add(word);
+                                tokens.add(new Token(word));
                             }
                         }
                     }
                 }
             }
-            json = gson.toJson(tokens);
-            System.out.println(file.getName()+" "+json);
+            /*json = gson.toJson(tokens);
+            System.out.println(file.getName()+" "+json);*/
+            System.out.println(file.getName());
+            for (int j = 0; j < tokens.size(); j++) {
+                System.out.println("   "+tokens.toString());
+            }
             index++;
 
             balises.clear();
