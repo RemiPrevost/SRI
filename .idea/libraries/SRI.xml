@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="SRI">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/jsoup-1.8.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/bson-2.13.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/gson-2.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/mongo-java-driver-2.13.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/java-json.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/java-json.jar!/" />
+    </SOURCES>
+  </library>
+</component>
