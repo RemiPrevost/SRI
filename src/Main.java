@@ -1,11 +1,9 @@
 import com.mongodb.*;
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.jsoup.select.Evaluator;
 
 import java.io.File;
 import java.io.IOException;
@@ -51,6 +49,8 @@ public class Main {
         int doc_count;
         int total_ite;
         int nb_doc=1;
+        double idf;
+        double tf;
 
         JSONObject json1;
         JSONObject json2;
@@ -64,7 +64,7 @@ public class Main {
             bad_words.add(scanner.nextLine());
         }
 
-        for (File file: files) {
+        /*for (File file: files) {
             file_name = file.getName().replace(".html","");
             word_count_all = 0;
             org.jsoup.nodes.Document doc = Jsoup.parse(file,"UTF-8","");
@@ -96,7 +96,12 @@ public class Main {
                     try {
                         Integer i = Integer.parseInt(word);
                     } catch (NumberFormatException e) {
-                        if (word.length() >= 2 && word.length() < 8) {
+                        if (word.length() >= 2) {
+                            if (word.length() >= 8) {
+                                System.out.println("word: "+word);
+                                word = word.substring(0,8);
+                                System.out.println("word_trunc: "+word);
+                            }
                             found = false;
                             for (String bad_word: bad_words) {
                                 if (bad_word.equals(word)) {
@@ -124,9 +129,6 @@ public class Main {
                                             }
                                             else {
                                                 // insert doc in exiting token
-                                                if (word.equals("abonner")) {
-                                                    System.out.println("");
-                                                }
                                                 query1 = new BasicDBObject(word, new BasicDBObject("$exists",true));
                                                 query2 = new BasicDBObject("$set",
                                                         new BasicDBObject(word+'.'+file_name,
@@ -164,8 +166,9 @@ public class Main {
 
             System.out.println("doc_num: "+nb_doc);
             nb_doc++;
-        }
+        }*/
 
+        /*
         cursor1 = coll_token.find();
         try {
             while (cursor1.hasNext()) {
@@ -199,7 +202,7 @@ public class Main {
                                         query2 = new BasicDBObject("$set",
                                                 new BasicDBObject(
                                                         key1+"."+key2+".tf",
-                                                        json3.getInt(key3)/(1+ Math.log10(word_count_all))
+                                                        (double)json3.getInt(key3)/(1+ Math.log10((double)word_count_all))
                                                 )
                                         );
                                         coll_token.update(query1,query2);
@@ -210,6 +213,8 @@ public class Main {
                         }
                     }
                 }
+
+
                 if(!temp.equals("")) {
                     System.out.println(temp);
                     query1 = new BasicDBObject(temp, new BasicDBObject("$exists",true));
@@ -224,8 +229,48 @@ public class Main {
 
                     query1 = new BasicDBObject(temp, new BasicDBObject("$exists",true));
                     query2 = new BasicDBObject("$set",
-                            new BasicDBObject("idf",Math.log10(total_ite/doc_count)));
+                            new BasicDBObject("idf",Math.log10((double)total_ite/(double)doc_count)));
                     coll_token.update(query1,query2);
+                }
+            }
+        } finally {
+            cursor1.close();
+        }*/
+
+        cursor1 = coll_token.find();
+        try {
+            while (cursor1.hasNext()) {
+                json1 = new JSONObject(cursor1.next().toString());
+                iterator1 = json1.keys();
+                idf=-1;
+                while(iterator1.hasNext()) {
+                    key1 = iterator1.next();
+                    if (key1.equals("idf")) {
+                        idf = json1.getDouble(key1);
+                    }
+                    if (!key1.equals("_id") && !key1.equals("nb_doc") && !key1.equals("total_ite") && !key1.equals("idf")) {
+                        temp=key1;
+                    }
+                }
+                if (idf != -1) {
+                    json2 = json1.getJSONObject(temp);
+                    iterator2 = json2.keys();
+                    while(iterator2.hasNext()) {
+                        key2 = iterator2.next();
+                        json3 = json2.getJSONObject(key2);
+                        iterator3 = json3.keys();
+                        while (iterator3.hasNext()) {
+                            key3 = iterator3.next();
+                            if (key3.equals("tf")) {
+                                tf = json3.getDouble(key3);
+                                query1 = new BasicDBObject(temp,new BasicDBObject("$exists",true));
+                                query2 = new BasicDBObject("$set",
+                                        new BasicDBObject(
+                                                temp+"."+key2+".tf-idf", tf*idf));
+                                coll_token.update(query1,query2);
+                            }
+                        }
+                    }
                 }
             }
         } finally {
