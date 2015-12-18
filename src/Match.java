@@ -175,18 +175,87 @@ public class Match {
         return sum(values) / (Math.sqrt(sum(list_square))*Math.sqrt(values.size()));
     }
 
+    public static HashMap<String,Boolean> readQrel(String path) {
+        HashMap<String,Boolean> docToRelevance = new HashMap<>();
+        BufferedReader buff;
+        String[] words;
+
+        try{
+            buff = new BufferedReader(new FileReader(path));
+
+            try {
+                String line;
+                while ((line = buff.readLine()) != null) {
+                    words = line.split("\t");
+                    docToRelevance.put(words[0].replace(".html",""),words[1].equals("1"));
+                }
+            } finally {
+                buff.close();
+            }
+        } catch (IOException ioe) {
+            System.out.println("Erreur --" + ioe.toString());
+        }
+
+        return docToRelevance;
+    }
+
     public static void main(String[] args) throws Exception {
         Match match;
-        List<String> documents;
+        List<List<String>> queriz_results = new ArrayList<>();
+        List<String> query_results;
+        List<String> queriz = Arrays.asList("Q1","Q2","Q3","Q4","Q5","Q6","Q7","Q8","Q9");
+        String path_queriz = "data/Queriz/";
+        String path_qrels = "data/qrels/";
+        HashMap<String,Boolean> docToRelevance;
 
-        if (args.length != 3) {
+        float relDocsBefore5 = 0;
+        float relDocsFrom5to10 = 0;
+        float relDocsFrom10to25 = 0;
+
+        float p5, p10, p25;
+
+        if (args.length != 2) {
             throw new Exception("Please provide a query, a weight and a method as input");
         }
 
-        match = new Match(args[0],args[1],args[2]);
-        documents = match.execute();
+        for (int i = 0; i < queriz.size(); i++) {
+            match = new Match(path_queriz+queriz.get(i),args[0],args[1]);
+            queriz_results.add(match.execute());
+        }
 
-        //List<Double> list_double = Arrays.asList(1.0,2.0,3.0);
-        System.out.println(documents.toString());
+        for (int i = 0; i < queriz.size(); i++) {
+            docToRelevance = readQrel(path_qrels+"qrelQ"+(i+1)+".txt");
+
+            if (i < queriz_results.size()) {
+                query_results = queriz_results.get(i);
+                for (int j=0; j<5; j++)  {
+                    if(docToRelevance.get(query_results.get(j)) != null){
+                        relDocsBefore5++;
+                    }
+                }
+
+                for(int j=5; j<10; j++){
+                    if(docToRelevance.get(query_results.get(j)) != null){
+                        relDocsFrom5to10++;
+                    }
+                }
+
+                for(int j=10; j<25; j++){
+                    if(docToRelevance.get(query_results.get(j)) != null){
+                        relDocsFrom10to25++;
+                    }
+                }
+            }
+            else {
+                break;
+            }
+        }
+        p5=(relDocsBefore5/5)/(float)queriz_results.size();
+        p10=(relDocsFrom5to10/5)/(float)queriz_results.size();
+        p25=(relDocsFrom10to25/15)/(float)queriz_results.size();
+
+        System.out.println("p5: "+p5);
+        System.out.println("p10: "+p10);
+        System.out.println("p25: "+p25);
     }
 }

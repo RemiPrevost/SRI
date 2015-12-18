@@ -35,6 +35,14 @@ public class Document implements Comparable{
 
     @Override
     public int compareTo(Object o) {
-        return ((Document)o).getWeight() < this.getWeight() ? -1 : 1;
+        if (this.getWeight() > ((Document)o).getWeight()) {
+            return -1;
+        }
+        else if (this.getWeight() < ((Document)o).getWeight()) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
     }
 }
