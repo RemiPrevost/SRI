@@ -21,7 +21,7 @@ D20.html	0
 D21.html	0
 D22.html	1
 D23.html	0
-D24.html	0,5
+D24.html	1
 D25.html	0
 D26.html	1
 D27.html	1
