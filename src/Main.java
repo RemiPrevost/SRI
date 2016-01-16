@@ -64,7 +64,7 @@ public class Main {
             bad_words.add(scanner.nextLine());
         }
 
-        /*for (File file: files) {
+        for (File file: files) {
             file_name = file.getName().replace(".html","");
             word_count_all = 0;
             org.jsoup.nodes.Document doc = Jsoup.parse(file,"UTF-8","");
@@ -166,9 +166,9 @@ public class Main {
 
             System.out.println("doc_num: "+nb_doc);
             nb_doc++;
-        }*/
+        }
 
-        /*
+
         cursor1 = coll_token.find();
         try {
             while (cursor1.hasNext()) {
@@ -235,7 +235,7 @@ public class Main {
             }
         } finally {
             cursor1.close();
-        }*/
+        }
 
         cursor1 = coll_token.find();
         try {

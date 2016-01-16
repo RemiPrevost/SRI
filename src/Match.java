@@ -3,6 +3,7 @@ import com.mongodb.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -18,11 +19,14 @@ public class Match {
     private MongoClient mongoClient;
     private DB db;
     private DBCollection coll_token;
+    private boolean ponderation;
 
-    public Match(String query_path, String weight_in, String method_in) throws Exception {
+    public Match(String query_path, String weight_in, String method_in, boolean ponderation) throws Exception {
         List<String> methods = Arrays.asList("sum","cos");
         List<String> weights = Arrays.asList("tf","tf-idf");
         BufferedReader buff;
+
+        this.ponderation = ponderation;
 
         if (methods.contains(method_in)) {
             this.method = method_in;
@@ -62,6 +66,7 @@ public class Match {
         List<List<Document>> main_list = new ArrayList<>();
         List<Document> final_docs = new ArrayList<>();
         List<Document> token_docs;
+        Integer bonus;
         List<Double> doc_weights;
         Document matched_doc;
         Boolean found;
@@ -105,6 +110,8 @@ public class Match {
             for (int index_docs = 0; index_docs < token_docs.size(); index_docs++) {
                 doc_weights = new ArrayList<>();
                 doc_weights.add(token_docs.get(index_docs).getWeight());
+                bonus = ponderation ? 2 : 1;
+
                 for (int k = 0; k < main_list.size(); k++) {
                     found = false;
                     if (k != index_main) {
@@ -118,15 +125,16 @@ public class Match {
 
                         if (!found) {
                             doc_weights.add(0.0);
+                            bonus=1;
                         }
                     }
                 }
-                System.out.println(main_list.get(index_main).get(index_docs).getName()+" : "+sum(doc_weights));
+                System.out.println(main_list.get(index_main).get(index_docs).getName()+" : "+sum(doc_weights)*bonus);
                 if (this.method.equals("sum")) {
-                    final_docs.add(new Document(main_list.get(index_main).get(index_docs).getName(),sum(doc_weights)));
+                    final_docs.add(new Document(main_list.get(index_main).get(index_docs).getName(),sum(doc_weights)*bonus));
                 }
                 else {
-                    final_docs.add(new Document(main_list.get(index_main).get(index_docs).getName(),cos(doc_weights)));
+                    final_docs.add(new Document(main_list.get(index_main).get(index_docs).getName(),cos(doc_weights)*bonus));
                 }
             }
         }
@@ -207,6 +215,9 @@ public class Match {
         String path_queriz = "data/Queriz/";
         String path_qrels = "data/qrels/";
         HashMap<String,Boolean> docToRelevance;
+        String query;
+        String qrel;
+        boolean ponderation = false;
 
         float relDocsBefore5 = 0;
         float relDocsFrom5to10 = 0;
@@ -214,12 +225,19 @@ public class Match {
 
         float p5, p10, p25;
 
-        if (args.length != 2) {
+        if (args.length == 4) {
+            queriz = Arrays.asList("Q"+args[3]);
+            ponderation = Integer.parseInt(args[2]) == 1;
+        }
+        else if (args.length == 3) {
+            ponderation = Integer.parseInt(args[2]) == 1;
+        }
+        else if (args.length != 2) {
             throw new Exception("Please provide a query, a weight and a method as input");
         }
 
         for (int i = 0; i < queriz.size(); i++) {
-            match = new Match(path_queriz+queriz.get(i),args[0],args[1]);
+            match = new Match(path_queriz+queriz.get(i),args[0],args[1],ponderation);
             queriz_results.add(match.execute());
         }
 
@@ -257,5 +275,6 @@ public class Match {
         System.out.println("p5: "+p5);
         System.out.println("p10: "+p10);
         System.out.println("p25: "+p25);
+        System.out.println("Ponderation : "+ponderation);
     }
 }
