@@ -1,0 +1,3586 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY terms "http://purl.org/dc/terms/" >
+    <!ENTITY foaf "http://xmlns.com/foaf/0.1/" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY event "http://purl.org/NET/c4dm/event.owl#" >
+    <!ENTITY owl2xml "http://www.w3.org/2006/12/owl2-xml#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY cinema "http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#" >
+]>
+
+
+<rdf:RDF xmlns="http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#"
+     xml:base="http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:terms="http://purl.org/dc/terms/"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:owl2xml="http://www.w3.org/2006/12/owl2-xml#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:cinema="http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#"
+     xmlns:event="http://purl.org/NET/c4dm/event.owl#"
+     xmlns:foaf="http://xmlns.com/foaf/0.1/">
+    <owl:Ontology rdf:about="http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl">
+        <rdfs:comment xml:lang="fr">IRIT - Equipe MELODI</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Maj le 27/02/2015</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Ontologie du cinéma (filmographie)</rdfs:comment>
+        <rdfs:comment xml:lang="fr">Version 1 - Publiée le 08 avril 2014</rdfs:comment>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#FilmAPourRecompense -->
+
+    <owl:ObjectProperty rdf:about="&cinema;FilmAPourRecompense">
+        <rdfs:label xml:lang="en">film has as reward </rdfs:label>
+        <rdfs:label xml:lang="fr">a pour récompense</rdfs:label>
+        <rdfs:comment xml:lang="fr">relie un film à sa récompense ou à celle d&apos;un des contributeurs à ce film</rdfs:comment>
+        <rdfs:domain rdf:resource="&cinema;Film"/>
+        <rdfs:subPropertyOf rdf:resource="&cinema;aPourRecompense"/>
+        <owl:inverseOf rdf:resource="&cinema;recompenseFilm"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PersonneAPourRecompense -->
+
+    <owl:ObjectProperty rdf:about="&cinema;PersonneAPourRecompense">
+        <rdfs:label xml:lang="en">person has as reward</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour récompense</rdfs:label>
+        <rdfs:comment xml:lang="fr">relie une personne à sa récompense</rdfs:comment>
+        <rdfs:domain rdf:resource="&cinema;Personne"/>
+        <rdfs:subPropertyOf rdf:resource="&cinema;aPourRecompense"/>
+        <owl:inverseOf rdf:resource="&cinema;recompensePersonne"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aEcritScenarioDe -->
+
+    <owl:ObjectProperty rdf:about="&cinema;aEcritScenarioDe">
+        <rdfs:label xml:lang="en">has written the scenario of </rdfs:label>
+        <rdfs:label xml:lang="en">has written the screenplay of </rdfs:label>
+        <rdfs:label xml:lang="fr">a écrit le scénario de</rdfs:label>
+        <rdfs:label xml:lang="fr">est le scénariste de</rdfs:label>
+        <rdfs:comment xml:lang="fr">une personne a écrit le scénario d&apos;un film</rdfs:comment>
+        <owl:inverseOf rdf:resource="&cinema;aPourScenariste"/>
+        <rdfs:subPropertyOf rdf:resource="&cinema;contribueArtistiquementAOeuvre"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aFigureDans -->
+
+    <owl:ObjectProperty rdf:about="&cinema;aFigureDans">
+        <rdfs:label xml:lang="en">has appeared in </rdfs:label>
+        <rdfs:label xml:lang="fr">a figuré dans</rdfs:label>
+        <rdfs:label xml:lang="fr">est figurant dans</rdfs:label>
+        <rdfs:label xml:lang="fr">est figurante dans</rdfs:label>
+        <owl:inverseOf rdf:resource="&cinema;aPourFigurant"/>
+        <rdfs:subPropertyOf rdf:resource="&cinema;estActeurDeComplementDans"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aJoueAvec -->
+
+    <owl:ObjectProperty rdf:about="&cinema;aJoueAvec">
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="&cinema;estActeurDans"/>
+            <rdf:Description rdf:about="&cinema;aPourActeur"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aPourActeur -->
+
+    <owl:ObjectProperty rdf:about="&cinema;aPourActeur">
+        <rdfs:label xml:lang="en">has as actor</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour acteur</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;aPourContributeurArtistique"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aPourActeurFemme -->
+
+    <owl:ObjectProperty rdf:about="&cinema;aPourActeurFemme">
+        <rdfs:label xml:lang="en">has as actress</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour actrice</rdfs:label>
+        <rdfs:range rdf:resource="&cinema;Femme"/>
+        <rdfs:subPropertyOf rdf:resource="&cinema;aPourActeur"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aPourActeurHomme -->
+
+    <owl:ObjectProperty rdf:about="&cinema;aPourActeurHomme">
+        <rdfs:label xml:lang="en">has as actor</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour acteur </rdfs:label>
+        <rdfs:range rdf:resource="&cinema;Homme"/>
+        <rdfs:subPropertyOf rdf:resource="&cinema;aPourActeur"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aPourAdaptation -->
+
+    <owl:ObjectProperty rdf:about="&cinema;aPourAdaptation">
+        <rdfs:label xml:lang="en">has as adaptation</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour adaptation</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aPourContributeur -->
+
+    <owl:ObjectProperty rdf:about="&cinema;aPourContributeur">
+        <rdfs:label xml:lang="en">has as contributor</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour contributeur</rdfs:label>
+        <rdfs:domain rdf:resource="&cinema;Oeuvre"/>
+        <owl:inverseOf rdf:resource="&cinema;contribueAOeuvre"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aPourContributeurArtistique -->
+
+    <owl:ObjectProperty rdf:about="&cinema;aPourContributeurArtistique">
+        <rdfs:label xml:lang="en">has as artistic contributor</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour contributeur artistique</rdfs:label>
+        <rdfs:domain rdf:resource="&cinema;OeuvreArtistique"/>
+        <rdfs:subPropertyOf rdf:resource="&cinema;aPourContributeur"/>
+        <owl:inverseOf rdf:resource="&cinema;contribueArtistiquementAOeuvre"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aPourFigurant -->
+
+    <owl:ObjectProperty rdf:about="&cinema;aPourFigurant">
+        <rdfs:label xml:lang="en">has as figurant</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour figurant</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;aPourContributeurArtistique"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aPourGenre -->
+
+    <owl:ObjectProperty rdf:about="&cinema;aPourGenre">
+        <rdfs:label xml:lang="en">has as genre</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour genre</rdfs:label>
+        <rdfs:label xml:lang="fr">est du genre</rdfs:label>
+        <rdfs:range rdf:resource="&cinema;Genre"/>
+        <rdfs:domain rdf:resource="&cinema;OeuvreArtistique"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aPourLieu -->
+
+    <owl:ObjectProperty rdf:about="&cinema;aPourLieu">
+        <rdfs:label xml:lang="en">has as location </rdfs:label>
+        <rdfs:label xml:lang="en">has as place</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour lieu</rdfs:label>
+        <rdfs:range rdf:resource="&cinema;Lieu"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aPourLieuDeTournage -->
+
+    <owl:ObjectProperty rdf:about="&cinema;aPourLieuDeTournage">
+        <rdfs:label xml:lang="en">has as filming location </rdfs:label>
+        <rdfs:label xml:lang="fr">a pour lieu de tournage</rdfs:label>
+        <rdfs:label xml:lang="fr">est tourne à/en/dans</rdfs:label>
+        <rdfs:domain rdf:resource="&cinema;Film"/>
+        <rdfs:subPropertyOf rdf:resource="&cinema;aPourLieu"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="&cinema;aPourLieuDeTournage"/>
+            <rdf:Description rdf:about="&cinema;estSitueDans"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aPourLieuMort -->
+
+    <owl:ObjectProperty rdf:about="&cinema;aPourLieuMort">
+        <rdfs:label xml:lang="en">has as place of death</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour lieu de mort</rdfs:label>
+        <rdfs:label xml:lang="fr">est mort en</rdfs:label>
+        <rdfs:label xml:lang="fr">est mort à</rdfs:label>
+        <rdfs:comment xml:lang="fr">est mort à/en/dans</rdfs:comment>
+        <rdfs:domain rdf:resource="&cinema;Personne"/>
+        <rdfs:subPropertyOf rdf:resource="&cinema;aPourLieu"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="&cinema;aPourLieuMort"/>
+            <rdf:Description rdf:about="&cinema;estSitueDans"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aPourLieuNaissance -->
+
+    <owl:ObjectProperty rdf:about="&cinema;aPourLieuNaissance">
+        <rdfs:label xml:lang="en">has as birthplace</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour lieu de naissance</rdfs:label>
+        <rdfs:label xml:lang="fr">est né à/en/dans</rdfs:label>
+        <rdfs:label xml:lang="fr">lieu naissance</rdfs:label>
+        <rdfs:domain rdf:resource="&cinema;Personne"/>
+        <rdfs:subPropertyOf rdf:resource="&cinema;aPourLieu"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="&cinema;aPourLieuNaissance"/>
+            <rdf:Description rdf:about="&cinema;estSitueDans"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aPourLocalisation -->
+
+    <owl:ObjectProperty rdf:about="&cinema;aPourLocalisation">
+        <rdfs:label xml:lang="en">has as localisation</rdfs:label>
+        <rdfs:label xml:lang="en">has as place</rdfs:label>
+        <rdfs:label xml:lang="fr">aPourLocalisation</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aPourMembreDeJury -->
+
+    <owl:ObjectProperty rdf:about="&cinema;aPourMembreDeJury">
+        <rdfs:label xml:lang="en">has as jury member</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour membre de jury</rdfs:label>
+        <owl:inverseOf rdf:resource="&cinema;estMembreDeJuryPour"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aPourOrigineGeographique -->
+
+    <owl:ObjectProperty rdf:about="&cinema;aPourOrigineGeographique">
+        <rdfs:label xml:lang="en">has as geographical origin</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour origine géographique</rdfs:label>
+        <rdfs:comment xml:lang="fr">origine de quelque-chose qui n&apos;est pas vivant (courant cinématographique, genre...)</rdfs:comment>
+        <rdfs:subPropertyOf rdf:resource="&cinema;aPourLieu"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="&cinema;aPourOrigineGeographique"/>
+            <rdf:Description rdf:about="&cinema;estSitueDans"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aPourPresident -->
+
+    <owl:ObjectProperty rdf:about="&cinema;aPourPresident">
+        <rdfs:label xml:lang="en">has as jury&apos;s president </rdfs:label>
+        <rdfs:label xml:lang="en">has as president</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour président</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour président de jury</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;aPourMembreDeJury"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aPourProducteur -->
+
+    <owl:ObjectProperty rdf:about="&cinema;aPourProducteur">
+        <rdfs:label xml:lang="en">has as producer</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour producteur</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;aPourContributeur"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aPourRealisateur -->
+
+    <owl:ObjectProperty rdf:about="&cinema;aPourRealisateur">
+        <rdfs:label xml:lang="en">has as director</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour realisateur</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;aPourContributeurArtistique"/>
+        <owl:inverseOf rdf:resource="&cinema;aRealise"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aPourRecompense -->
+
+    <owl:ObjectProperty rdf:about="&cinema;aPourRecompense">
+        <rdfs:label xml:lang="fr">a dans son palmarès</rdfs:label>
+        <rdfs:label>a pour récompense</rdfs:label>
+        <rdfs:label xml:lang="en">has as reward</rdfs:label>
+        <rdfs:range rdf:resource="&cinema;PrixDecerne"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aPourRole -->
+
+    <owl:ObjectProperty rdf:about="&cinema;aPourRole">
+        <rdfs:label xml:lang="en">has as role</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour rôle</rdfs:label>
+        <rdfs:comment xml:lang="fr">les rôles qu&apos;il y a dans une oeuvre</rdfs:comment>
+        <rdfs:domain rdf:resource="&cinema;OeuvreArtistique"/>
+        <rdfs:range rdf:resource="&cinema;Role"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aPourScenariste -->
+
+    <owl:ObjectProperty rdf:about="&cinema;aPourScenariste">
+        <rdfs:label xml:lang="en">has as scenarist</rdfs:label>
+        <rdfs:label xml:lang="en">has as screenwriter</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour scenariste</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;aPourContributeurArtistique"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aPourSexe -->
+
+    <owl:ObjectProperty rdf:about="&cinema;aPourSexe">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label xml:lang="en">has as gender</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour sexe</rdfs:label>
+        <rdfs:domain rdf:resource="&cinema;Personne"/>
+        <rdfs:range rdf:resource="&cinema;Sexe"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aPourTechnicien -->
+
+    <owl:ObjectProperty rdf:about="&cinema;aPourTechnicien">
+        <rdfs:label xml:lang="fr">a pour technicien</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;aPourContributeur"/>
+        <owl:inverseOf rdf:resource="&cinema;estTechnicienPour"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aPourTechnique -->
+
+    <owl:ObjectProperty rdf:about="&cinema;aPourTechnique">
+        <rdfs:label xml:lang="en">has as technique</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour technique</rdfs:label>
+        <rdfs:domain rdf:resource="&cinema;Oeuvre"/>
+        <rdfs:range rdf:resource="&cinema;Technique"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aPourTechniqueDAnimation -->
+
+    <owl:ObjectProperty rdf:about="&cinema;aPourTechniqueDAnimation">
+        <rdfs:label xml:lang="en">has as animation techique</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour technique d&apos;animation</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;aPourTechnique"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aPourTechniqueDePriseDeSon -->
+
+    <owl:ObjectProperty rdf:about="&cinema;aPourTechniqueDePriseDeSon">
+        <rdfs:label xml:lang="en">has as sound recording technique</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour technique de prise de son</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;aPourTechnique"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aPourTechniqueDePriseDeVues -->
+
+    <owl:ObjectProperty rdf:about="&cinema;aPourTechniqueDePriseDeVues">
+        <rdfs:label xml:lang="en">has as shooting technique</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour technique de prise de vues</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;aPourTechnique"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aProduit -->
+
+    <owl:ObjectProperty rdf:about="&cinema;aProduit">
+        <rdfs:label xml:lang="en">has producted</rdfs:label>
+        <rdfs:label xml:lang="fr">a produit</rdfs:label>
+        <rdfs:label xml:lang="fr">est le producteur de</rdfs:label>
+        <owl:inverseOf rdf:resource="&cinema;aPourProducteur"/>
+        <rdfs:subPropertyOf rdf:resource="&cinema;contribueAOeuvre"/>
+        <rdfs:subPropertyOf rdf:resource="&cinema;contribueArtistiquementAOeuvre"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aRealise -->
+
+    <owl:ObjectProperty rdf:about="&cinema;aRealise">
+        <rdfs:label xml:lang="en">has realised</rdfs:label>
+        <rdfs:label xml:lang="fr">a réalisé</rdfs:label>
+        <rdfs:label xml:lang="fr">est le réalisateur de</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;contribueArtistiquementAOeuvre"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#acteurAPourCascadeur -->
+
+    <owl:ObjectProperty rdf:about="&cinema;acteurAPourCascadeur">
+        <rdfs:label xml:lang="en">actor has as stunt performer</rdfs:label>
+        <rdfs:label xml:lang="en">actor has as stuntman</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;acteurAPourDoublure"/>
+        <owl:inverseOf rdf:resource="&cinema;estCascadeurPourActeur"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#acteurAPourDoublure -->
+
+    <owl:ObjectProperty rdf:about="&cinema;acteurAPourDoublure">
+        <rdfs:label xml:lang="fr">a pour doublure</rdfs:label>
+        <rdfs:range rdf:resource="&cinema;Personne"/>
+        <rdfs:domain rdf:resource="&cinema;Personne"/>
+        <owl:inverseOf rdf:resource="&cinema;estLaDoublureDeActeur"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#acteurDoublePar -->
+
+    <owl:ObjectProperty rdf:about="&cinema;acteurDoublePar">
+        <rdfs:label xml:lang="en">is doubled by </rdfs:label>
+        <rdfs:label xml:lang="fr">a pour doubleur</rdfs:label>
+        <rdfs:label xml:lang="fr">doublé par</rdfs:label>
+        <rdfs:label xml:lang="fr">est doublé par</rdfs:label>
+        <rdfs:comment xml:lang="fr">relation entre un acteur et un doubleur ayant doublé au moins une fois cet acteur</rdfs:comment>
+        <rdfs:range rdf:resource="&cinema;Personne"/>
+        <owl:inverseOf rdf:resource="&cinema;estLeDoubleurDeActeur"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="&cinema;incarne"/>
+            <rdf:Description rdf:about="&cinema;roleDoublePar"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#apparaitDans -->
+
+    <owl:ObjectProperty rdf:about="&cinema;apparaitDans">
+        <rdfs:label xml:lang="en">appears in </rdfs:label>
+        <rdfs:label xml:lang="fr">apparait dans</rdfs:label>
+        <rdfs:comment xml:lang="fr">relation entre un rôle et une oeuvre dans laquelle ce rôle apparait</rdfs:comment>
+        <owl:inverseOf rdf:resource="&cinema;aPourRole"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#competitionRecompense -->
+
+    <owl:ObjectProperty rdf:about="&cinema;competitionRecompense">
+        <rdfs:label xml:lang="en">competition reward</rdfs:label>
+        <rdfs:label xml:lang="fr">CompetitionRecompense</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#concourtPourCompetition -->
+
+    <owl:ObjectProperty rdf:about="&cinema;concourtPourCompetition">
+        <rdfs:label xml:lang="en">compete for competition </rdfs:label>
+        <rdfs:label xml:lang="en">concourt pour compétition</rdfs:label>
+        <rdfs:label xml:lang="fr">concourt</rdfs:label>
+        <rdfs:range rdf:resource="&cinema;Competition"/>
+        <rdfs:domain rdf:resource="&cinema;Oeuvre"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="&cinema;concourtPourPrix"/>
+            <rdf:Description rdf:about="&cinema;estDecernePar"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#concourtPourPrix -->
+
+    <owl:ObjectProperty rdf:about="&cinema;concourtPourPrix">
+        <rdfs:label xml:lang="en">compete for </rdfs:label>
+        <rdfs:label xml:lang="en">is nominated for</rdfs:label>
+        <rdfs:label xml:lang="fr">concourt pour</rdfs:label>
+        <rdfs:label xml:lang="fr">est nominé pour</rdfs:label>
+        <rdfs:comment xml:lang="fr">une oeuvre ou une personne qui concoure pour un prix</rdfs:comment>
+        <rdfs:range rdf:resource="&cinema;PrixDecerne"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#contribueAOeuvre -->
+
+    <owl:ObjectProperty rdf:about="&cinema;contribueAOeuvre">
+        <rdfs:label xml:lang="en">contributes to work</rdfs:label>
+        <rdfs:label xml:lang="fr">contribue à</rdfs:label>
+        <rdfs:label xml:lang="fr">contribue à ouvre</rdfs:label>
+        <rdfs:label xml:lang="fr">impliquer dans</rdfs:label>
+        <rdfs:label xml:lang="fr">participe à</rdfs:label>
+        <rdfs:domain rdf:resource="&cinema;Personne"/>
+        <rdfs:subPropertyOf rdf:resource="&cinema;estDansDistributionArtistique"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#contribueArtistiquementAOeuvre -->
+
+    <owl:ObjectProperty rdf:about="&cinema;contribueArtistiquementAOeuvre">
+        <rdfs:label xml:lang="en">contributes artistically to</rdfs:label>
+        <rdfs:label xml:lang="fr">contribue artistiquement à</rdfs:label>
+        <rdfs:label xml:lang="fr">participe artistiquement à</rdfs:label>
+        <rdfs:domain rdf:resource="&cinema;Artiste"/>
+        <rdfs:range rdf:resource="&cinema;OeuvreArtistique"/>
+        <rdfs:subPropertyOf rdf:resource="&cinema;contribueAOeuvre"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#decerne -->
+
+    <owl:ObjectProperty rdf:about="&cinema;decerne">
+        <rdfs:label xml:lang="en">awards</rdfs:label>
+        <rdfs:label xml:lang="fr">donne prix</rdfs:label>
+        <rdfs:label xml:lang="fr">décerne</rdfs:label>
+        <rdfs:domain rdf:resource="&cinema;Competition"/>
+        <rdfs:range rdf:resource="&cinema;PrixDecerne"/>
+        <owl:inverseOf rdf:resource="&cinema;estDecernePar"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estAccessoiristePour -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estAccessoiristePour">
+        <rdfs:label xml:lang="en">is prop man for </rdfs:label>
+        <rdfs:label xml:lang="fr">est accessoiriste pour</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;estTechnicienDecorPour"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estActeurDans -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estActeurDans">
+        <rdfs:label>est comédien dans</rdfs:label>
+        <rdfs:label xml:lang="en">is actor in </rdfs:label>
+        <rdfs:label xml:lang="en">played in </rdfs:label>
+        <rdfs:label xml:lang="fr">a joué dans</rdfs:label>
+        <rdfs:label xml:lang="fr">est acteur dans</rdfs:label>
+        <rdfs:comment xml:lang="fr">même si c est hors domaine, on ne met pas de range parce qu un acteur peut jouer dans autre chose qu un film</rdfs:comment>
+        <owl:inverseOf rdf:resource="&cinema;aPourActeur"/>
+        <rdfs:subPropertyOf rdf:resource="&cinema;contribueArtistiquementAOeuvre"/>
+        <rdfs:subPropertyOf rdf:resource="&cinema;estDansDistributionArtistique"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="&cinema;incarne"/>
+            <rdf:Description rdf:about="&cinema;apparaitDans"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estActeurDeComplementDans -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estActeurDeComplementDans">
+        <rdfs:label xml:lang="fr">estActeurDeComplementDans</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;estActeurDans"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estActeurMasculinDans -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estActeurMasculinDans">
+        <rdfs:label xml:lang="en">is actor in</rdfs:label>
+        <rdfs:label xml:lang="fr">est acteur masculin dans</rdfs:label>
+        <rdfs:domain rdf:resource="&cinema;Homme"/>
+        <rdfs:subPropertyOf rdf:resource="&cinema;estActeurDans"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estActriceDans -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estActriceDans">
+        <rdfs:label xml:lang="en">is actress in</rdfs:label>
+        <rdfs:label xml:lang="fr">est actrice dans</rdfs:label>
+        <rdfs:comment xml:lang="fr">il est possible de vouloir distinguer les réalisateurs en fonction de leur sexe</rdfs:comment>
+        <rdfs:domain rdf:resource="&cinema;Femme"/>
+        <rdfs:subPropertyOf rdf:resource="&cinema;estActeurDans"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estAssistantOperateurPour -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estAssistantOperateurPour">
+        <rdfs:label xml:lang="en">is operator for </rdfs:label>
+        <rdfs:label xml:lang="fr">est assistant opérateur pour</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;estTechnicienImagePour"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estBruiteurDans -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estBruiteurDans">
+        <rdfs:label xml:lang="en">is sound effect technician in</rdfs:label>
+        <rdfs:label xml:lang="fr">est bruiteur dans</rdfs:label>
+        <rdfs:label xml:lang="fr">est bruiteuse dans</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;estActeurDeComplementDans"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estCadreurPour -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estCadreurPour">
+        <rdfs:label xml:lang="en">is cameraman for</rdfs:label>
+        <rdfs:label xml:lang="fr">est cadreur pour</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;estTechnicienImagePour"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estCascadeurDans -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estCascadeurDans">
+        <rdfs:label xml:lang="en">is stunt performer in</rdfs:label>
+        <rdfs:label xml:lang="en">is stuntman in</rdfs:label>
+        <rdfs:label xml:lang="fr">est cascadeur dans</rdfs:label>
+        <rdfs:label xml:lang="fr">est cascadeuse dans</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;estActeurDeComplementDans"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estCascadeurDansFilm -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estCascadeurDansFilm">
+        <rdfs:label xml:lang="en">is stunt performer in film</rdfs:label>
+        <rdfs:label xml:lang="en">is stuntman in film</rdfs:label>
+        <rdfs:label xml:lang="fr">est cascadeur dans film</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;estDoublureDansFilm"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="&cinema;estCascadeurPourRole"/>
+            <rdf:Description rdf:about="&cinema;apparaitDans"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estCascadeurPourActeur -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estCascadeurPourActeur">
+        <rdfs:label xml:lang="en">is the stunt perfomer for actor</rdfs:label>
+        <rdfs:label xml:lang="en">is the stuntman for actor</rdfs:label>
+        <rdfs:label xml:lang="fr">effectue les cascades pour</rdfs:label>
+        <rdfs:label xml:lang="fr">est cascadeur pour acteur</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;estLaDoublureDeActeur"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estCascadeurPourRole -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estCascadeurPourRole">
+        <rdfs:label xml:lang="en">is stuntman for role </rdfs:label>
+        <rdfs:label xml:lang="fr">effectue les cascades de</rdfs:label>
+        <rdfs:label xml:lang="fr">est cascadeur pour role</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;estLaDoublureDeRole"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estChefDecorateurPour -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estChefDecorateurPour">
+        <rdfs:label xml:lang="en">is head decorator for</rdfs:label>
+        <rdfs:label xml:lang="fr">est chef décorateur pour</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;estEnsemblierPour"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estChefMonteurPour -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estChefMonteurPour">
+        <rdfs:label xml:lang="en">is head editor for</rdfs:label>
+        <rdfs:label xml:lang="fr">est chef monteur pour</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;estTechnicienPostProductionPour"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estCoiffeurPour -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estCoiffeurPour">
+        <rdfs:label xml:lang="en">is hairdresser for</rdfs:label>
+        <rdfs:label xml:lang="fr">est coiffeur pour</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;estTechnicienHMCPour"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estCostumierePour -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estCostumierePour">
+        <rdfs:label xml:lang="en">is costume designer for</rdfs:label>
+        <rdfs:label xml:lang="fr">est costumière pour</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;estTechnicienHMCPour"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estDansDistributionArtistique -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estDansDistributionArtistique">
+        <rdfs:label xml:lang="fr">fait partie du casting de</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;contribueAOeuvre"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estDecernePar -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estDecernePar">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label xml:lang="en">is awarded by</rdfs:label>
+        <rdfs:label xml:lang="fr">est décerné par</rdfs:label>
+        <rdfs:range rdf:resource="&cinema;Competition"/>
+        <rdfs:domain rdf:resource="&cinema;PrixDecerne"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estDirecteurPhotographiePour -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estDirecteurPhotographiePour">
+        <rdfs:label xml:lang="en">is director of photography for</rdfs:label>
+        <rdfs:label xml:lang="fr">est chef opérateur de prises de vues pour</rdfs:label>
+        <rdfs:label xml:lang="fr">est directeur de la photographie pour</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;estTechnicienImagePour"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estDirecteurPostProductionPour -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estDirecteurPostProductionPour">
+        <rdfs:label xml:lang="en">is post production director for</rdfs:label>
+        <rdfs:label xml:lang="fr">est directeur post production pour</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;estTechnicienPostProductionPour"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estDoubleurDans -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estDoubleurDans">
+        <rdfs:label xml:lang="en">is doubler in </rdfs:label>
+        <rdfs:label xml:lang="fr">a doublé quelqu&apos;un dans</rdfs:label>
+        <rdfs:label xml:lang="fr">est doubleur dans</rdfs:label>
+        <rdfs:label xml:lang="fr">est doubleuse</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;estActeurDeComplementDans"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estDoublureDans -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estDoublureDans">
+        <rdfs:label xml:lang="fr">est doublure dans</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;estActeurDeComplementDans"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estDoublureDansFilm -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estDoublureDansFilm">
+        <rdfs:label xml:lang="en">is doubler in film</rdfs:label>
+        <rdfs:label xml:lang="fr">est doublure dans film</rdfs:label>
+        <rdfs:comment xml:lang="fr">permet d&apos;inférer le film dans lequel la doublure à partir du role doubler</rdfs:comment>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="&cinema;estLaDoublureDeRole"/>
+            <rdf:Description rdf:about="&cinema;apparaitDans"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estEnsemblierPour -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estEnsemblierPour">
+        <rdfs:label xml:lang="en">is decorator for</rdfs:label>
+        <rdfs:label xml:lang="fr">est décorateur ensemblier pour</rdfs:label>
+        <rdfs:label xml:lang="fr">est décorateur pour</rdfs:label>
+        <rdfs:label xml:lang="fr">est ensemblier pour</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;estTechnicienDecorPour"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estIncarnePar -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estIncarnePar">
+        <rdfs:label xml:lang="en">is played by </rdfs:label>
+        <rdfs:label xml:lang="fr">est incarné par</rdfs:label>
+        <rdfs:range rdf:resource="&cinema;Personne"/>
+        <rdfs:domain rdf:resource="&cinema;Role"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estIngenieurSonPour -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estIngenieurSonPour">
+        <rdfs:label xml:lang="en">is sound engineer for</rdfs:label>
+        <rdfs:label xml:lang="fr">est chef-opérateur du son pour</rdfs:label>
+        <rdfs:label xml:lang="fr">est ingénieur du son pour</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;estTechnicienSonPour"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estLaDoublureDeActeur -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estLaDoublureDeActeur">
+        <rdfs:label xml:lang="en">is the doubler of actor</rdfs:label>
+        <rdfs:label xml:lang="fr">double</rdfs:label>
+        <rdfs:label xml:lang="fr">est la doublure d&apos;acteur</rdfs:label>
+        <rdfs:label xml:lang="fr">est la doublure de</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estLaDoublureDeRole -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estLaDoublureDeRole">
+        <rdfs:label xml:lang="en">is the doubler of role </rdfs:label>
+        <rdfs:label xml:lang="fr">double</rdfs:label>
+        <rdfs:label xml:lang="fr">est la doublure de </rdfs:label>
+        <rdfs:domain rdf:resource="&cinema;Personne"/>
+        <rdfs:range rdf:resource="&cinema;Role"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estLeDoubleurDeActeur -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estLeDoubleurDeActeur">
+        <rdfs:label xml:lang="en">is the doubler of actor</rdfs:label>
+        <rdfs:label xml:lang="fr">double l&apos;acteur</rdfs:label>
+        <rdfs:label xml:lang="fr">est le doubleur d&apos;acteur</rdfs:label>
+        <rdfs:comment xml:lang="fr">relation entre un doubleur et l&apos;acteur qu&apos;il a doublé</rdfs:comment>
+        <rdfs:range rdf:resource="&cinema;Personne"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="&cinema;estLeDoubleurDeRole"/>
+            <rdf:Description rdf:about="&cinema;estIncarnePar"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estLeDoubleurDeRole -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estLeDoubleurDeRole">
+        <rdfs:label xml:lang="en">is the doubler of role</rdfs:label>
+        <rdfs:label xml:lang="fr">est le doubleur de role</rdfs:label>
+        <rdfs:comment xml:lang="fr">relation entre un doubleur et le rôle qu&apos;il a doublé</rdfs:comment>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estLocalisePour -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estLocalisePour">
+        <rdfs:label xml:lang="en">is localised for</rdfs:label>
+        <rdfs:label xml:lang="fr">est localisé pour</rdfs:label>
+        <rdfs:comment xml:lang="fr">relation entre un film localisé et la zone géographique pour laquelle il a été localisé</rdfs:comment>
+        <rdfs:range rdf:resource="&cinema;AireGeographique"/>
+        <rdfs:domain rdf:resource="&cinema;OeuvreLocalisee"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estMaquilleurPour -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estMaquilleurPour">
+        <rdfs:label xml:lang="en">is make-up technician</rdfs:label>
+        <rdfs:label xml:lang="fr">est maquilleur pour</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;estTechnicienHMCPour"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estMembreDeJuryPour -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estMembreDeJuryPour">
+        <rdfs:label xml:lang="en">is jury member for </rdfs:label>
+        <rdfs:label xml:lang="fr">est membre du jury pour</rdfs:label>
+        <rdfs:label xml:lang="fr">fait partie du jury qui délibère pour</rdfs:label>
+        <rdfs:comment xml:lang="fr">relation entre une personne et une compétition pour laquelle cette personne a été membre du jury</rdfs:comment>
+        <rdfs:range rdf:resource="&cinema;Competition"/>
+        <rdfs:domain rdf:resource="&cinema;Personne"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estMixeurPour -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estMixeurPour">
+        <rdfs:label xml:lang="en">is mixer for</rdfs:label>
+        <rdfs:label xml:lang="fr">est mixeur pour</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;estTechnicienPostProductionPour"/>
+        <rdfs:subPropertyOf rdf:resource="&cinema;estTechnicienSonPour"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estMonteurSonPour -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estMonteurSonPour">
+        <rdfs:label xml:lang="en">is sound editor for </rdfs:label>
+        <rdfs:label xml:lang="fr">est monteur son pour</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;estTechnicienPostProductionPour"/>
+        <rdfs:subPropertyOf rdf:resource="&cinema;estTechnicienSonPour"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estPerchmanPour -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estPerchmanPour">
+        <rdfs:label xml:lang="en">is boom operator for</rdfs:label>
+        <rdfs:label xml:lang="fr">est assistant son pour</rdfs:label>
+        <rdfs:label xml:lang="fr">est perchiste pour</rdfs:label>
+        <rdfs:label xml:lang="fr">est perchman pour</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;estTechnicienSonPour"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estPhotographeDePlateauPour -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estPhotographeDePlateauPour">
+        <rdfs:label xml:lang="en">is set photographer</rdfs:label>
+        <rdfs:label xml:lang="fr">est photographe de plateau pour</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;estTechnicienImagePour"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estPresidentDeJuryPour -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estPresidentDeJuryPour">
+        <rdfs:label xml:lang="en">is jury president for</rdfs:label>
+        <rdfs:label xml:lang="fr">est président de jury pour</rdfs:label>
+        <rdfs:label xml:lang="fr">préside le jury de</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;estMembreDeJuryPour"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estRealisateurHomme -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estRealisateurHomme">
+        <rdfs:label xml:lang="en">is a male film director</rdfs:label>
+        <rdfs:label xml:lang="fr">est réalisateur</rdfs:label>
+        <rdfs:domain rdf:resource="&cinema;Homme"/>
+        <rdfs:subPropertyOf rdf:resource="&cinema;aRealise"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estRealisatrice -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estRealisatrice">
+        <rdfs:label xml:lang="en">is a female film director</rdfs:label>
+        <rdfs:label xml:lang="fr">est realisatrice</rdfs:label>
+        <rdfs:comment xml:lang="fr">il est possible de vouloir distinguer les réalisateurs en fonction de leur sexe</rdfs:comment>
+        <rdfs:domain rdf:resource="&cinema;Femme"/>
+        <rdfs:subPropertyOf rdf:resource="&cinema;aRealise"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estRecompenseA -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estRecompenseA">
+        <rdfs:label xml:lang="en">is awarded in</rdfs:label>
+        <rdfs:label xml:lang="fr">est primé à</rdfs:label>
+        <rdfs:label xml:lang="fr">est récompense à</rdfs:label>
+        <rdfs:comment xml:lang="fr">relation entre une personne et un compétition à laquelle cette personne a reçu un prix</rdfs:comment>
+        <rdfs:range rdf:resource="&cinema;Competition"/>
+        <rdfs:domain rdf:resource="&cinema;Personne"/>
+        <owl:inverseOf rdf:resource="&cinema;competitionRecompense"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="&cinema;PersonneAPourRecompense"/>
+            <rdf:Description rdf:about="&cinema;estDecernePar"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estRecompensePour -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estRecompensePour">
+        <rdfs:label xml:lang="en">is awarded for</rdfs:label>
+        <rdfs:label xml:lang="fr">est récompensé pour le film</rdfs:label>
+        <rdfs:range rdf:resource="&cinema;Film"/>
+        <rdfs:domain rdf:resource="&cinema;Personne"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="&cinema;PersonneAPourRecompense"/>
+            <rdf:Description rdf:about="&cinema;recompenseFilm"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estRegisseurPour -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estRegisseurPour">
+        <rdfs:label xml:lang="en">is manager for</rdfs:label>
+        <rdfs:label xml:lang="fr">est régisseur pour</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;estTechnicienPour"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estSitueDans -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estSitueDans">
+        <rdf:type rdf:resource="&owl;TransitiveProperty"/>
+        <rdfs:label xml:lang="en">is located in</rdfs:label>
+        <rdfs:label xml:lang="fr">est situé à/en/dans</rdfs:label>
+        <rdfs:label xml:lang="fr">se situe à/en/dans</rdfs:label>
+        <rdfs:comment xml:lang="fr">permet de dire qu&apos;un lieu est situé dans un autre lieu</rdfs:comment>
+        <rdfs:domain rdf:resource="&cinema;Lieu"/>
+        <rdfs:subPropertyOf rdf:resource="&cinema;aPourLieu"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estTechnicienDecorPour -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estTechnicienDecorPour">
+        <rdfs:label xml:lang="en">est technicien décor pour</rdfs:label>
+        <rdfs:label xml:lang="en">is scenography technician for</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;estTechnicienPour"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estTechnicienHMCPour -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estTechnicienHMCPour">
+        <rdfs:label xml:lang="en">is make-up dressing hairstyle technician for</rdfs:label>
+        <rdfs:label xml:lang="fr">est technicien HMC pour</rdfs:label>
+        <rdfs:label xml:lang="fr">est technicien habillage maquillage coiffure pour</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;estTechnicienPour"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estTechnicienImagePour -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estTechnicienImagePour">
+        <rdfs:label xml:lang="en">is image technician for</rdfs:label>
+        <rdfs:label xml:lang="fr">est technicien de l&apos;image pour</rdfs:label>
+        <rdfs:label xml:lang="fr">est technicien image pour</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;estTechnicienPour"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estTechnicienPostProductionPour -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estTechnicienPostProductionPour">
+        <rdfs:label xml:lang="en">is post production technician</rdfs:label>
+        <rdfs:label xml:lang="fr">est technicien post production pour</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;estTechnicienPour"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estTechnicienPour -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estTechnicienPour">
+        <rdfs:label xml:lang="en">is technician in</rdfs:label>
+        <rdfs:label xml:lang="fr">est technicien pour</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;contribueAOeuvre"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estTechnicienSonPour -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estTechnicienSonPour">
+        <rdfs:label xml:lang="en">is sound technician for </rdfs:label>
+        <rdfs:label xml:lang="fr">est technicien son pour</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;estTechnicienPour"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estUneAdaptationDe -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estUneAdaptationDe">
+        <rdfs:label xml:lang="en">is une adaptatin of</rdfs:label>
+        <rdfs:label xml:lang="fr">est une adaptation de</rdfs:label>
+        <rdfs:range rdf:resource="&cinema;Oeuvre"/>
+        <rdfs:domain rdf:resource="&cinema;Oeuvre"/>
+        <owl:inverseOf rdf:resource="&cinema;aPourAdaptation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#estUneLocalisationDe -->
+
+    <owl:ObjectProperty rdf:about="&cinema;estUneLocalisationDe">
+        <rdfs:label xml:lang="en">is a version of </rdfs:label>
+        <rdfs:label xml:lang="fr">est une localisation de</rdfs:label>
+        <rdfs:label xml:lang="fr">est une version de</rdfs:label>
+        <rdfs:comment xml:lang="fr">a pour oeuvre originale</rdfs:comment>
+        <rdfs:comment xml:lang="fr">relation entre une oeuvre localisée et l&apos;oeuvre originale dont elle est la localisation</rdfs:comment>
+        <rdfs:domain rdf:resource="&cinema;OeuvreLocalisee"/>
+        <rdfs:range rdf:resource="&cinema;OeuvreOriginale"/>
+        <owl:inverseOf rdf:resource="&cinema;aPourLocalisation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#filmAPourDoubleur -->
+
+    <owl:ObjectProperty rdf:about="&cinema;filmAPourDoubleur">
+        <rdfs:label xml:lang="en">has as doubler</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour doubleur</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;aPourContributeurArtistique"/>
+        <owl:inverseOf rdf:resource="&cinema;estDoubleurDans"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#filmAPourDoublure -->
+
+    <owl:ObjectProperty rdf:about="&cinema;filmAPourDoublure">
+        <rdfs:label xml:lang="en">film has as double </rdfs:label>
+        <rdfs:label xml:lang="fr">a pour doublure</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;aPourContributeurArtistique"/>
+        <owl:inverseOf rdf:resource="&cinema;estDoublureDans"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#filmConcourePour -->
+
+    <owl:ObjectProperty rdf:about="&cinema;filmConcourePour">
+        <rdfs:label xml:lang="en">film competes for</rdfs:label>
+        <rdfs:label xml:lang="fr">concoure pour</rdfs:label>
+        <rdfs:label xml:lang="fr">est nominé pour</rdfs:label>
+        <rdfs:domain rdf:resource="&cinema;Film"/>
+        <rdfs:subPropertyOf rdf:resource="&cinema;concourtPourPrix"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#incarne -->
+
+    <owl:ObjectProperty rdf:about="&cinema;incarne">
+        <rdfs:label xml:lang="en">plays the role</rdfs:label>
+        <rdfs:label xml:lang="en">plays the role of</rdfs:label>
+        <rdfs:label xml:lang="fr">incarne</rdfs:label>
+        <rdfs:label xml:lang="fr">incarne le rôle de</rdfs:label>
+        <rdfs:label xml:lang="fr">joue</rdfs:label>
+        <rdfs:label xml:lang="fr">joue le rôle de</rdfs:label>
+        <rdfs:comment xml:lang="fr">relation entre un etre vivant et un role incarné par cet être vivant</rdfs:comment>
+        <rdfs:domain rdf:resource="&cinema;Personne"/>
+        <rdfs:range rdf:resource="&cinema;Role"/>
+        <owl:inverseOf rdf:resource="&cinema;estIncarnePar"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#personneConcourePour -->
+
+    <owl:ObjectProperty rdf:about="&cinema;personneConcourePour">
+        <rdfs:label xml:lang="en">person competes for</rdfs:label>
+        <rdfs:label xml:lang="fr">concoure pour</rdfs:label>
+        <rdfs:label xml:lang="fr">est nominé pour</rdfs:label>
+        <rdfs:domain rdf:resource="&cinema;Personne"/>
+        <rdfs:subPropertyOf rdf:resource="&cinema;concourtPourPrix"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#recompense -->
+
+    <owl:ObjectProperty rdf:about="&cinema;recompense">
+        <rdfs:label xml:lang="en">rewards</rdfs:label>
+        <rdfs:label xml:lang="fr">est dans le palmarès de</rdfs:label>
+        <rdfs:label xml:lang="fr">récompense</rdfs:label>
+        <owl:inverseOf rdf:resource="&cinema;aPourRecompense"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#recompenseFilm -->
+
+    <owl:ObjectProperty rdf:about="&cinema;recompenseFilm">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label xml:lang="en">rewards film</rdfs:label>
+        <rdfs:label xml:lang="fr">récompense</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;recompense"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#recompensePersonne -->
+
+    <owl:ObjectProperty rdf:about="&cinema;recompensePersonne">
+        <rdfs:label xml:lang="en">rewards person</rdfs:label>
+        <rdfs:label xml:lang="fr">personne récompensée</rdfs:label>
+        <rdfs:label xml:lang="fr">personnes récompensées</rdfs:label>
+        <rdfs:label xml:lang="fr">récompense personne</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;recompense"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#roleAPourCascadeur -->
+
+    <owl:ObjectProperty rdf:about="&cinema;roleAPourCascadeur">
+        <rdfs:label xml:lang="en">role has as stunt perfomer</rdfs:label>
+        <rdfs:label xml:lang="en">role has as stuntman </rdfs:label>
+        <rdfs:label xml:lang="fr">role a pour cascadeur</rdfs:label>
+        <owl:inverseOf rdf:resource="&cinema;estCascadeurPourRole"/>
+        <rdfs:subPropertyOf rdf:resource="&cinema;roleAPourDoublure"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#roleAPourDoublure -->
+
+    <owl:ObjectProperty rdf:about="&cinema;roleAPourDoublure">
+        <rdfs:label xml:lang="fr">est assuré par la doublure</rdfs:label>
+        <rdfs:label xml:lang="fr">role a pour doublure</rdfs:label>
+        <rdfs:range rdf:resource="&cinema;Personne"/>
+        <rdfs:domain rdf:resource="&cinema;Role"/>
+        <owl:inverseOf rdf:resource="&cinema;estLaDoublureDeRole"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#roleDoublePar -->
+
+    <owl:ObjectProperty rdf:about="&cinema;roleDoublePar">
+        <rdfs:label xml:lang="en">is doubled by </rdfs:label>
+        <rdfs:label xml:lang="fr">est doublé par</rdfs:label>
+        <rdfs:label xml:lang="fr">role doublé par </rdfs:label>
+        <rdfs:comment xml:lang="fr">relie un rôle au doubleur qui l&apos;a doublé (dans une version localisée)</rdfs:comment>
+        <rdfs:range rdf:resource="&cinema;Personne"/>
+        <rdfs:domain rdf:resource="&cinema;Role"/>
+        <owl:inverseOf rdf:resource="&cinema;estLeDoubleurDeRole"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#seDerouleDans -->
+
+    <owl:ObjectProperty rdf:about="&cinema;seDerouleDans">
+        <rdfs:label xml:lang="en">takes place in</rdfs:label>
+        <rdfs:label xml:lang="fr">se déroule à/en/dans</rdfs:label>
+        <rdfs:comment xml:lang="fr">permet d&apos;indiquer le lieu dans lequel se déroule un évènement (competition, film)</rdfs:comment>
+        <rdfs:domain rdf:resource="&cinema;Evenement"/>
+        <rdfs:subPropertyOf rdf:resource="&cinema;aPourLieu"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="&cinema;seDerouleDans"/>
+            <rdf:Description rdf:about="&cinema;estSitueDans"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.w3.org/2002/07/owl#topObjectProperty -->
+
+    <owl:ObjectProperty rdf:about="&owl;topObjectProperty"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://purl.org/dc/terms/title -->
+
+    <owl:DatatypeProperty rdf:about="&terms;title">
+        <rdfs:label xml:lang="en">title</rdfs:label>
+        <rdfs:label xml:lang="fr">titre</rdfs:label>
+        <owl:equivalentProperty rdf:resource="&cinema;aPourTitre"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aPourDate -->
+
+    <owl:DatatypeProperty rdf:about="&cinema;aPourDate">
+        <rdfs:label xml:lang="en">has as date</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour date</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aPourDateDebut -->
+
+    <owl:DatatypeProperty rdf:about="&cinema;aPourDateDebut">
+        <rdfs:label xml:lang="en">has as starting date</rdfs:label>
+        <rdfs:label xml:lang="en">starting date</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour date début</rdfs:label>
+        <rdfs:comment xml:lang="fr">correspond à la date de début d&apos;un évènement</rdfs:comment>
+        <rdfs:domain rdf:resource="&cinema;Evenement"/>
+        <rdfs:subPropertyOf rdf:resource="&cinema;aPourDate"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aPourDateFin -->
+
+    <owl:DatatypeProperty rdf:about="&cinema;aPourDateFin">
+        <rdfs:label xml:lang="en">ending date</rdfs:label>
+        <rdfs:label xml:lang="en">has as ending date</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour date fin</rdfs:label>
+        <rdfs:comment xml:lang="fr">correspond à la date de fin d&apos;un évènement</rdfs:comment>
+        <rdfs:domain rdf:resource="&cinema;Evenement"/>
+        <rdfs:subPropertyOf rdf:resource="&cinema;aPourDate"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aPourDateMort -->
+
+    <owl:DatatypeProperty rdf:about="&cinema;aPourDateMort">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label xml:lang="en">date of death</rdfs:label>
+        <rdfs:label xml:lang="en">has as date of death</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour date de mort</rdfs:label>
+        <rdfs:comment>concerne un individu</rdfs:comment>
+        <rdfs:domain rdf:resource="&cinema;Personne"/>
+        <rdfs:subPropertyOf rdf:resource="&cinema;aPourDate"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aPourDateNaissance -->
+
+    <owl:DatatypeProperty rdf:about="&cinema;aPourDateNaissance">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label xml:lang="en">date of birth</rdfs:label>
+        <rdfs:label xml:lang="en">has as date of birth</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour date de naissance</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&cinema;aPourDate"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aPourDateSortie -->
+
+    <owl:DatatypeProperty rdf:about="&cinema;aPourDateSortie">
+        <rdfs:label xml:lang="en">release date
+
+</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour date de sortie</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour date sortie</rdfs:label>
+        <rdfs:comment xml:lang="fr">concerne les oeuvre comme par exemple les films + dvd</rdfs:comment>
+        <rdfs:domain rdf:resource="&cinema;Oeuvre"/>
+        <rdfs:subPropertyOf rdf:resource="&cinema;aPourDate"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aPourDureeMinutes -->
+
+    <owl:DatatypeProperty rdf:about="&cinema;aPourDureeMinutes">
+        <rdfs:label xml:lang="en">has as duration</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour durée</rdfs:label>
+        <rdfs:comment xml:lang="fr">rajouter car OWL ne gère pas le type xsd:duration et il est important de définir correctement la classe court-métrage</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;int"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aPourNom -->
+
+    <owl:DatatypeProperty rdf:about="&cinema;aPourNom">
+        <rdfs:label xml:lang="en">has as last name</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour nom</rdfs:label>
+        <owl:equivalentProperty rdf:resource="&foaf;familyName"/>
+        <owl:equivalentProperty rdf:resource="&foaf;family_name"/>
+        <owl:equivalentProperty rdf:resource="&foaf;lastName"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aPourNombreDeMembreDeJury -->
+
+    <owl:DatatypeProperty rdf:about="&cinema;aPourNombreDeMembreDeJury">
+        <rdfs:label xml:lang="en">has number of jury members</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour nombre de membre de jury</rdfs:label>
+        <rdfs:range rdf:resource="&xsd;int"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aPourPrenom -->
+
+    <owl:DatatypeProperty rdf:about="&cinema;aPourPrenom">
+        <rdfs:label xml:lang="en">first name</rdfs:label>
+        <rdfs:label xml:lang="en">has as first name</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour prenom</rdfs:label>
+        <rdfs:label xml:lang="fr">prénom</rdfs:label>
+        <owl:equivalentProperty rdf:resource="&foaf;firstName"/>
+        <owl:equivalentProperty rdf:resource="&foaf;givenName"/>
+        <owl:equivalentProperty rdf:resource="&foaf;givenname"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#aPourTitre -->
+
+    <owl:DatatypeProperty rdf:about="&cinema;aPourTitre">
+        <rdfs:label xml:lang="en">title</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour titre</rdfs:label>
+        <rdfs:label xml:lang="fr">titre</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/familyName -->
+
+    <owl:DatatypeProperty rdf:about="&foaf;familyName">
+        <rdfs:label xml:lang="en">family name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/family_name -->
+
+    <owl:DatatypeProperty rdf:about="&foaf;family_name">
+        <rdfs:label xml:lang="en">family name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/firstName -->
+
+    <owl:DatatypeProperty rdf:about="&foaf;firstName">
+        <rdfs:label xml:lang="en">first name</rdfs:label>
+        <rdfs:label xml:lang="fr">prénom</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/givenName -->
+
+    <owl:DatatypeProperty rdf:about="&foaf;givenName">
+        <rdfs:label xml:lang="en">given name</rdfs:label>
+        <rdfs:label xml:lang="fr">prénom</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/givenname -->
+
+    <owl:DatatypeProperty rdf:about="&foaf;givenname">
+        <rdfs:label xml:lang="en">given name</rdfs:label>
+        <rdfs:label xml:lang="fr">prénom</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/lastName -->
+
+    <owl:DatatypeProperty rdf:about="&foaf;lastName">
+        <rdfs:label xml:lang="en">has as last name</rdfs:label>
+        <rdfs:label xml:lang="en">last name</rdfs:label>
+        <rdfs:label xml:lang="fr">a pour nom</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://purl.org/NET/c4dm/event.owl#Event -->
+
+    <owl:Class rdf:about="&event;Event">
+        <owl:equivalentClass rdf:resource="&cinema;Evenement"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#AireGeographique -->
+
+    <owl:Class rdf:about="&cinema;AireGeographique">
+        <rdfs:label xml:lang="en">geographical area</rdfs:label>
+        <rdfs:label xml:lang="fr">zone géographique</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;Lieu"/>
+        <rdfs:comment xml:lang="fr">aire géographique</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Artiste -->
+
+    <owl:Class rdf:about="&cinema;Artiste">
+        <rdfs:label xml:lang="en">artist</rdfs:label>
+        <rdfs:label xml:lang="fr">artiste</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;Personne"/>
+        <rdfs:comment xml:lang="fr">une personne est artiste même si elle n&apos;a pas contribué à une oeuvre (le terme artiste désigne directement la classe) voir http://fr.wikipedia.org/wiki/Artiste</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#CameraOr -->
+
+    <owl:Class rdf:about="&cinema;CameraOr">
+        <rdfs:label xml:lang="en">Golden camera </rdfs:label>
+        <rdfs:label xml:lang="fr">Caméra d&apos;or</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixSpecifiqueFestivaleDeCannes"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Ceremonie -->
+
+    <owl:Class rdf:about="&cinema;Ceremonie">
+        <rdfs:label xml:lang="en">ceremony</rdfs:label>
+        <rdfs:label xml:lang="fr">cérémonie</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;Competition"/>
+        <owl:disjointWith rdf:resource="&cinema;CompetitionMedia"/>
+        <rdfs:comment xml:lang="fr">est une compétition qui dure moins d&apos;un jour (non exprimable en owl 2)</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#CesarDuCinema -->
+
+    <owl:Class rdf:about="&cinema;CesarDuCinema">
+        <rdfs:label xml:lang="en">cesars of french cinema</rdfs:label>
+        <rdfs:label xml:lang="fr">césars du cinéma</rdfs:label>
+        <rdfs:label xml:lang="fr">césars du cinéma français</rdfs:label>
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&cinema;decerne"/>
+                <owl:someValuesFrom rdf:resource="&cinema;PrixCesarDesCesars"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&cinema;Ceremonie"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Cinefondation -->
+
+    <owl:Class rdf:about="&cinema;Cinefondation">
+        <rdfs:label xml:lang="fr">Cinéfondation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixSpecifiqueFestivaleDeCannes"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Competition -->
+
+    <owl:Class rdf:about="&cinema;Competition">
+        <rdfs:label xml:lang="en">competition</rdfs:label>
+        <rdfs:label xml:lang="fr">compétition</rdfs:label>
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&cinema;decerne"/>
+                <owl:someValuesFrom rdf:resource="&cinema;PrixDecerne"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&cinema;Evenement"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#CompetitionMedia -->
+
+    <owl:Class rdf:about="&cinema;CompetitionMedia">
+        <rdfs:label xml:lang="en">media prizes</rdfs:label>
+        <rdfs:label xml:lang="fr">prix média</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;Competition"/>
+        <owl:disjointWith rdf:resource="&cinema;FestivalDeCinema"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Continent -->
+
+    <owl:Class rdf:about="&cinema;Continent">
+        <rdfs:label xml:lang="fr">continent</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;LieuAdministratif"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#CourantCinematographique -->
+
+    <owl:Class rdf:about="&cinema;CourantCinematographique">
+        <rdfs:label xml:lang="en">cinematographic school</rdfs:label>
+        <rdfs:label xml:lang="en">film movement</rdfs:label>
+        <rdfs:label xml:lang="en">film school</rdfs:label>
+        <rdfs:label xml:lang="fr">courant cinématographique</rdfs:label>
+        <rdfs:label xml:lang="fr">mouvement cinématographique</rdfs:label>
+        <rdfs:label xml:lang="fr">école cinématographique</rdfs:label>
+        <rdfs:comment xml:lang="fr">instances tirées des sources suivantes:
+http://fr.wikipedia.org/wiki/Cin%C3%A9ma#Mouvements_et_.C3.A9coles
+http://fr.wikipedia.org/wiki/Courant_cin%C3%A9matographique
+http://fr.wikipedia.org/wiki/Cat%C3%A9gorie:Courant_cin%C3%A9matographique</rdfs:comment>
+        <rdfs:comment xml:lang="fr">manière de ressentir l’œuvre</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#CourtMetrage -->
+
+    <owl:Class rdf:about="&cinema;CourtMetrage">
+        <rdfs:label xml:lang="en">short film</rdfs:label>
+        <rdfs:label xml:lang="fr">court métrage</rdfs:label>
+        <rdfs:label xml:lang="fr">court-métrage</rdfs:label>
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cinema;Film"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&cinema;aPourDureeMinutes"/>
+                        <owl:someValuesFrom>
+                            <rdfs:Datatype>
+                                <owl:onDatatype rdf:resource="&xsd;int"/>
+                                <owl:withRestrictions rdf:parseType="Collection">
+                                    <rdf:Description>
+                                        <xsd:maxInclusive rdf:datatype="&xsd;integer">59</xsd:maxInclusive>
+                                    </rdf:Description>
+                                </owl:withRestrictions>
+                            </rdfs:Datatype>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <owl:disjointWith rdf:resource="&cinema;LongMetrage"/>
+        <rdfs:comment xml:lang="fr">film qui dure 59 minutes ou moins, comme expliqué ici: http://fr.wikipedia.org/wiki/Court_m%C3%A9trage#La_d.C3.A9finition_d.27un_court_m.C3.A9trage</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#DessinAnime -->
+
+    <owl:Class rdf:about="&cinema;DessinAnime">
+        <rdfs:label xml:lang="en">cartoon</rdfs:label>
+        <rdfs:label xml:lang="fr">dessin animé</rdfs:label>
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cinema;Film"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&cinema;aPourTechnique"/>
+                        <owl:someValuesFrom rdf:resource="&cinema;TechniqueDuDessinAnime"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:comment xml:lang="fr">film qui utilise la technique du dessin animé</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#DeuxiemePrixCinefondation -->
+
+    <owl:Class rdf:about="&cinema;DeuxiemePrixCinefondation">
+        <rdfs:label xml:lang="en">second cinéfondation prize</rdfs:label>
+        <rdfs:label xml:lang="fr">deuxième prix Cinéfondation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;Cinefondation"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Evenement -->
+
+    <owl:Class rdf:about="&cinema;Evenement">
+        <rdfs:label xml:lang="en">event</rdfs:label>
+        <rdfs:label xml:lang="fr">évènement</rdfs:label>
+        <rdfs:label xml:lang="fr">événement</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Femme -->
+
+    <owl:Class rdf:about="&cinema;Femme">
+        <rdfs:label xml:lang="en">female</rdfs:label>
+        <rdfs:label xml:lang="fr">femme</rdfs:label>
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cinema;Personne"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&cinema;aPourSexe"/>
+                        <owl:hasValue rdf:resource="&cinema;Feminin"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&cinema;Personne"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#FestivalDeCannes -->
+
+    <owl:Class rdf:about="&cinema;FestivalDeCannes">
+        <rdfs:label xml:lang="en">Cannes festival</rdfs:label>
+        <rdfs:label xml:lang="fr">festival de Cannes</rdfs:label>
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&cinema;decerne"/>
+                <owl:someValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="&cinema;CameraOr"/>
+                            <rdf:Description rdf:about="&cinema;Cinefondation"/>
+                            <rdf:Description rdf:about="&cinema;UnCertainRegard"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:someValuesFrom>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&cinema;FestivalDeCinema"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&cinema;seDerouleDans"/>
+                <owl:hasValue rdf:resource="&cinema;Cannes"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#FestivalDeCinema -->
+
+    <owl:Class rdf:about="&cinema;FestivalDeCinema">
+        <rdfs:label xml:lang="en">cinema festival</rdfs:label>
+        <rdfs:label xml:lang="en">film festival</rdfs:label>
+        <rdfs:label xml:lang="fr">festival</rdfs:label>
+        <rdfs:label xml:lang="fr">festival de cinéma</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;Competition"/>
+        <rdfs:comment xml:lang="fr">un festival est une compétition qui dure au moins un jour (non exprimable en OWL2)</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#FestivalDeClermontFerrand -->
+
+    <owl:Class rdf:about="&cinema;FestivalDeClermontFerrand">
+        <rdfs:label xml:lang="en">Clermont-Ferrand festival</rdfs:label>
+        <rdfs:label xml:lang="fr">festival de Clermont-Ferrand</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;FestivalDeCinema"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&cinema;seDerouleDans"/>
+                <owl:hasValue rdf:resource="&cinema;ClermontFerrand"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#FestivalDeDeauville -->
+
+    <owl:Class rdf:about="&cinema;FestivalDeDeauville">
+        <rdfs:label xml:lang="en">Deauville festival</rdfs:label>
+        <rdfs:label xml:lang="fr">festival de Deauville</rdfs:label>
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&cinema;decerne"/>
+                <owl:someValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="&cinema;PrixMichelOrnano"/>
+                            <rdf:Description rdf:about="&cinema;PrixRevelationCartier"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:someValuesFrom>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&cinema;FestivalDeCinema"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&cinema;seDerouleDans"/>
+                <owl:hasValue rdf:resource="&cinema;Deauville"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#FestivalDuReel -->
+
+    <owl:Class rdf:about="&cinema;FestivalDuReel">
+        <rdfs:label xml:lang="en">Reel festival</rdfs:label>
+        <rdfs:label xml:lang="fr">festival du Reel</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;FestivalDeCinema"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Film -->
+
+    <owl:Class rdf:about="&cinema;Film">
+        <rdfs:label xml:lang="en">movie</rdfs:label>
+        <rdfs:label xml:lang="fr">film</rdfs:label>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&cinema;aPourProducteur"/>
+                <owl:onClass rdf:resource="&cinema;Personne"/>
+                <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&cinema;aPourRealisateur"/>
+                <owl:onClass rdf:resource="&cinema;Personne"/>
+                <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment xml:lang="fr">attention un film n&apos;a pas forcement d acteur (les films documentaires)</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Film3D -->
+
+    <owl:Class rdf:about="&cinema;Film3D">
+        <rdfs:label xml:lang="en">3D film</rdfs:label>
+        <rdfs:label xml:lang="fr">film en 3D</rdfs:label>
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cinema;Film"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&cinema;aPourTechnique"/>
+                        <owl:someValuesFrom rdf:resource="&cinema;TechniqueDAnimation3D"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#FilmEnNoirEtBlanc -->
+
+    <owl:Class rdf:about="&cinema;FilmEnNoirEtBlanc">
+        <rdfs:label xml:lang="en">black and white film</rdfs:label>
+        <rdfs:label xml:lang="en">black-and-white film</rdfs:label>
+        <rdfs:label xml:lang="fr">film en noir et blanc</rdfs:label>
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cinema;Film"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&cinema;aPourTechniqueDePriseDeVues"/>
+                        <owl:someValuesFrom rdf:resource="&cinema;PriseDeVueEnNoirEtBlanc"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#FilmLocalise -->
+
+    <owl:Class rdf:about="&cinema;FilmLocalise">
+        <rdfs:label xml:lang="en">film version</rdfs:label>
+        <rdfs:label xml:lang="en">localised film</rdfs:label>
+        <rdfs:label xml:lang="fr">film localisé</rdfs:label>
+        <rdfs:label xml:lang="fr">version de film</rdfs:label>
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cinema;Film"/>
+                    <rdf:Description rdf:about="&cinema;OeuvreLocalisee"/>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <owl:disjointWith rdf:resource="&cinema;FilmOriginal"/>
+        <rdfs:comment xml:lang="fr">version d&apos;un film qui a été adaptée pour être distribuée dans une région différente de la région d&apos;origine</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#FilmOriginal -->
+
+    <owl:Class rdf:about="&cinema;FilmOriginal">
+        <rdfs:label xml:lang="en">original film</rdfs:label>
+        <rdfs:label xml:lang="fr">film original</rdfs:label>
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cinema;Film"/>
+                    <rdf:Description rdf:about="&cinema;OeuvreOriginale"/>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Genre -->
+
+    <owl:Class rdf:about="&cinema;Genre">
+        <rdfs:label xml:lang="fr">genre</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#GenreCinematographique -->
+
+    <owl:Class rdf:about="&cinema;GenreCinematographique">
+        <rdfs:label xml:lang="en">cinematographic genre</rdfs:label>
+        <rdfs:label xml:lang="fr">genre</rdfs:label>
+        <rdfs:label xml:lang="fr">genre cinematographique</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;Genre"/>
+        <rdfs:comment xml:lang="fr">instances prises ici:
+http://fr.wikipedia.org/wiki/Portail:Cin%C3%A9ma/Arborescence</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#GrandPrix -->
+
+    <owl:Class rdf:about="&cinema;GrandPrix">
+        <rdfs:label xml:lang="en">grand prix</rdfs:label>
+        <rdfs:label xml:lang="fr">grand prix</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixFilm"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#GrandPrixCinemaELLE -->
+
+    <owl:Class rdf:about="&cinema;GrandPrixCinemaELLE">
+        <rdfs:label xml:lang="en">grand prize cinema ELLE</rdfs:label>
+        <rdfs:label xml:lang="fr">grand prix cinéma ELLE</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;CompetitionMedia"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Homme -->
+
+    <owl:Class rdf:about="&cinema;Homme">
+        <rdfs:label xml:lang="en">male</rdfs:label>
+        <rdfs:label xml:lang="fr">homme</rdfs:label>
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cinema;Personne"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&cinema;aPourSexe"/>
+                        <owl:hasValue rdf:resource="&cinema;Masculin"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&cinema;Personne"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#IntervenantArtistiqueDansOeuvre -->
+
+    <owl:Class rdf:about="&cinema;IntervenantArtistiqueDansOeuvre">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&cinema;contribueArtistiquementAOeuvre"/>
+                <owl:someValuesFrom rdf:resource="&cinema;Oeuvre"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&cinema;Artiste"/>
+        <rdfs:comment xml:lang="fr">classe &quot;à anonymiser&quot; correspondant aux personnes ayant contribué artistiquement à une oeuvre</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Lieu -->
+
+    <owl:Class rdf:about="&cinema;Lieu">
+        <rdfs:label xml:lang="en">place</rdfs:label>
+        <rdfs:label xml:lang="fr">lieu</rdfs:label>
+        <rdfs:label xml:lang="fr">localisation</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#LieuAdministratif -->
+
+    <owl:Class rdf:about="&cinema;LieuAdministratif">
+        <rdfs:label xml:lang="en">administrative area</rdfs:label>
+        <rdfs:label xml:lang="fr">lieu administratif</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;Lieu"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#LongMetrage -->
+
+    <owl:Class rdf:about="&cinema;LongMetrage">
+        <rdfs:label xml:lang="en">feature film</rdfs:label>
+        <rdfs:label xml:lang="en">full-length feature film</rdfs:label>
+        <rdfs:label xml:lang="en">full-length film</rdfs:label>
+        <rdfs:label xml:lang="fr">long-métrage</rdfs:label>
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cinema;Film"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&cinema;aPourDureeMinutes"/>
+                        <owl:someValuesFrom>
+                            <rdfs:Datatype>
+                                <owl:onDatatype rdf:resource="&xsd;int"/>
+                                <owl:withRestrictions rdf:parseType="Collection">
+                                    <rdf:Description>
+                                        <xsd:minExclusive rdf:datatype="&xsd;integer">59</xsd:minExclusive>
+                                    </rdf:Description>
+                                </owl:withRestrictions>
+                            </rdfs:Datatype>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:comment xml:lang="fr">film qui dure plus de 59 minutes</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Oeuvre -->
+
+    <owl:Class rdf:about="&cinema;Oeuvre">
+        <rdfs:label xml:lang="en">work</rdfs:label>
+        <rdfs:label xml:lang="fr">oeuvre</rdfs:label>
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&cinema;aPourContributeur"/>
+                <owl:someValuesFrom rdf:resource="&cinema;Personne"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:comment xml:lang="fr">est quelque chose à laquelle quelqu&apos;un a contribué</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#OeuvreArtistique -->
+
+    <owl:Class rdf:about="&cinema;OeuvreArtistique">
+        <rdfs:label xml:lang="en">artistic work</rdfs:label>
+        <rdfs:label xml:lang="fr">oeuvre artistique</rdfs:label>
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&cinema;aPourContributeurArtistique"/>
+                <owl:someValuesFrom rdf:resource="&cinema;Personne"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#OeuvreLocalisee -->
+
+    <owl:Class rdf:about="&cinema;OeuvreLocalisee">
+        <rdfs:label xml:lang="en">localised work</rdfs:label>
+        <rdfs:label xml:lang="fr">oeuvre localisée</rdfs:label>
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cinema;Oeuvre"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&cinema;estLocalisePour"/>
+                        <owl:someValuesFrom rdf:resource="&cinema;AireGeographique"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cinema;Oeuvre"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&cinema;estUneLocalisationDe"/>
+                        <owl:someValuesFrom rdf:resource="&cinema;Oeuvre"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <owl:disjointWith rdf:resource="&cinema;OeuvreOriginale"/>
+        <rdfs:comment xml:lang="fr">oeuvre adaptée à la culture d&apos;un lieu géographique (notamment la langue)</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#OeuvreOriginale -->
+
+    <owl:Class rdf:about="&cinema;OeuvreOriginale">
+        <rdfs:label xml:lang="en">original work</rdfs:label>
+        <rdfs:label xml:lang="fr">oeuvre originale</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;Oeuvre"/>
+        <rdfs:comment>oeuvre telle qu&apos;elle est conçue par son créateur</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Pays -->
+
+    <owl:Class rdf:about="&cinema;Pays">
+        <rdfs:label xml:lang="en">country</rdfs:label>
+        <rdfs:label xml:lang="fr">pays</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;LieuAdministratif"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Personne -->
+
+    <owl:Class rdf:about="&cinema;Personne">
+        <rdfs:label xml:lang="en">person</rdfs:label>
+        <rdfs:label xml:lang="fr">personne</rdfs:label>
+        <rdfs:label xml:lang="fr">personnes</rdfs:label>
+        <owl:equivalentClass rdf:resource="&foaf;Person"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PremierPrixCinefondation -->
+
+    <owl:Class rdf:about="&cinema;PremierPrixCinefondation">
+        <rdfs:label xml:lang="en">first cinéfondation prize</rdfs:label>
+        <rdfs:label xml:lang="fr">premier prix Cinéfondation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;Cinefondation"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PriseDeVueEnNoirEtBlanc -->
+
+    <owl:Class rdf:about="&cinema;PriseDeVueEnNoirEtBlanc">
+        <rdfs:label xml:lang="en">black and white shooting technique</rdfs:label>
+        <rdfs:label xml:lang="fr">prise de vue en noir et blanc</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;TechniqueDePriseDeVue"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixArtiste -->
+
+    <owl:Class rdf:about="&cinema;PrixArtiste">
+        <rdfs:label xml:lang="en">award for an artist</rdfs:label>
+        <rdfs:label xml:lang="fr">prix pour un artiste</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixDecerne"/>
+        <owl:disjointWith rdf:resource="&cinema;PrixOeuvreCinematographique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixCesarDesCesars -->
+
+    <owl:Class rdf:about="&cinema;PrixCesarDesCesars">
+        <rdfs:label xml:lang="en">César of Césars</rdfs:label>
+        <rdfs:label xml:lang="fr">César des Césars</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixSpecifiqueCeremonieCesar"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixCritiqueInternationale -->
+
+    <owl:Class rdf:about="&cinema;PrixCritiqueInternationale">
+        <rdfs:label xml:lang="en">International critics award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix de la critique internationale</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixFilm"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixDecerne -->
+
+    <owl:Class rdf:about="&cinema;PrixDecerne">
+        <rdfs:label xml:lang="en">award</rdfs:label>
+        <rdfs:label xml:lang="en">prizes awarded</rdfs:label>
+        <rdfs:label xml:lang="fr">prix</rdfs:label>
+        <rdfs:label xml:lang="fr">prix décerné</rdfs:label>
+        <rdfs:label xml:lang="fr">récompense</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixDirection -->
+
+    <owl:Class rdf:about="&cinema;PrixDirection">
+        <rdfs:label xml:lang="en">direction award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix de direction</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixArtiste"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixFilm -->
+
+    <owl:Class rdf:about="&cinema;PrixFilm">
+        <rdfs:label xml:lang="en">film award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix film</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixOeuvreCinematographique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixFilmdAnimation -->
+
+    <owl:Class rdf:about="&cinema;PrixFilmdAnimation">
+        <rdfs:label xml:lang="en">animation film award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix du film d&apos;animation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixFilm"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixHonneur -->
+
+    <owl:Class rdf:about="&cinema;PrixHonneur">
+        <rdfs:label xml:lang="en">award of honor </rdfs:label>
+        <rdfs:label xml:lang="fr">prix d&apos;honneur</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixFilm"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixInterpretation -->
+
+    <owl:Class rdf:about="&cinema;PrixInterpretation">
+        <rdfs:label xml:lang="en">interpretation award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix d&apos;interprétation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixArtiste"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixJury -->
+
+    <owl:Class rdf:about="&cinema;PrixJury">
+        <rdfs:label xml:lang="en">jury award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix du jury</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixFilm"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixMeilleurActeur -->
+
+    <owl:Class rdf:about="&cinema;PrixMeilleurActeur">
+        <rdfs:label xml:lang="en">best actor award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix du meilleur acteur</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixInterpretation"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixMeilleurActeurSecondRole -->
+
+    <owl:Class rdf:about="&cinema;PrixMeilleurActeurSecondRole">
+        <rdfs:label xml:lang="en">best second male role award</rdfs:label>
+        <rdfs:label xml:lang="en">best supporting actor award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix du meilleur second rôle masculin</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixInterpretation"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixMeilleurDecor -->
+
+    <owl:Class rdf:about="&cinema;PrixMeilleurDecor">
+        <rdfs:label xml:lang="en">best scenography award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix du meilleur décor</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixMeilleursCostumesEtDecors"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixMeilleurEspoirFeminin -->
+
+    <owl:Class rdf:about="&cinema;PrixMeilleurEspoirFeminin">
+        <rdfs:label xml:lang="en">best female newcomer award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix du meilleur espoir féminin</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixInterpretation"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixMeilleurEspoirMasculin -->
+
+    <owl:Class rdf:about="&cinema;PrixMeilleurEspoirMasculin">
+        <rdfs:label xml:lang="en">best male newcomer award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix du meilleur espoir masculin</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixInterpretation"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixMeilleurFilm -->
+
+    <owl:Class rdf:about="&cinema;PrixMeilleurFilm">
+        <rdfs:label xml:lang="en">best film award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix du meilleur film</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixFilm"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixMeilleurMaquillage -->
+
+    <owl:Class rdf:about="&cinema;PrixMeilleurMaquillage">
+        <rdfs:label xml:lang="en">best make-up award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix du meilleur maquillage</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixMeilleursCostumesEtDecors"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixMeilleurMixageSon -->
+
+    <owl:Class rdf:about="&cinema;PrixMeilleurMixageSon">
+        <rdfs:label xml:lang="en">best sound mixing award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix meilleur mixage de son</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixMeilleurSon"/>
+        <owl:disjointWith rdf:resource="&cinema;PrixMeilleurSonFilm"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixMeilleurMontage -->
+
+    <owl:Class rdf:about="&cinema;PrixMeilleurMontage">
+        <rdfs:label xml:lang="en">best editing award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix du meilleur montage</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixTechnique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixMeilleurPremierFilm -->
+
+    <owl:Class rdf:about="&cinema;PrixMeilleurPremierFilm">
+        <rdfs:label xml:lang="en">best first film award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix du meilleur premier film</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixFilm"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixMeilleurScenario -->
+
+    <owl:Class rdf:about="&cinema;PrixMeilleurScenario">
+        <rdfs:label xml:lang="en">award for best scenario</rdfs:label>
+        <rdfs:label xml:lang="fr">prix du meilleur scénario</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixScenario"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixMeilleurScenarioOriginal -->
+
+    <owl:Class rdf:about="&cinema;PrixMeilleurScenarioOriginal">
+        <rdfs:label xml:lang="en">award for best original scenario</rdfs:label>
+        <rdfs:label xml:lang="fr">prix du meilleur scénario original</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixScenario"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixMeilleurScenarioOriginalOuAdaptation -->
+
+    <owl:Class rdf:about="&cinema;PrixMeilleurScenarioOriginalOuAdaptation">
+        <rdfs:label xml:lang="en">award for best original scenario or adaptation </rdfs:label>
+        <rdfs:label xml:lang="fr">prix du meilleur scénario original ou d&apos;adaptation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixScenario"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixMeilleurSon -->
+
+    <owl:Class rdf:about="&cinema;PrixMeilleurSon">
+        <rdfs:label xml:lang="en">sound award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix son</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixTechnique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixMeilleurSonFilm -->
+
+    <owl:Class rdf:about="&cinema;PrixMeilleurSonFilm">
+        <rdfs:label xml:lang="en">best sound award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix meilleur son</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixMeilleurSon"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixMeilleureActrice -->
+
+    <owl:Class rdf:about="&cinema;PrixMeilleureActrice">
+        <rdfs:label xml:lang="en">best actress award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix de la meilleure actrice</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixInterpretation"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixMeilleureActriceSecondRole -->
+
+    <owl:Class rdf:about="&cinema;PrixMeilleureActriceSecondRole">
+        <rdfs:label xml:lang="en">best second female role award</rdfs:label>
+        <rdfs:label xml:lang="en">best supporting actress award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix du meilleur second rôle féminin</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixInterpretation"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixMeilleureAdaptation -->
+
+    <owl:Class rdf:about="&cinema;PrixMeilleureAdaptation">
+        <rdfs:label xml:lang="en">award for best adaptation</rdfs:label>
+        <rdfs:label xml:lang="fr">prix de la meilleure adaptation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixScenario"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixMeilleureAffiche -->
+
+    <owl:Class rdf:about="&cinema;PrixMeilleureAffiche">
+        <rdfs:label xml:lang="en">best poster award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix de la meilleure affiche</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixTechnique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixMeilleureChansonOriginale -->
+
+    <owl:Class rdf:about="&cinema;PrixMeilleureChansonOriginale">
+        <rdfs:label xml:lang="en">best original song award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix de la meilleure chanson originale</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixMeilleureMusique"/>
+        <owl:disjointWith rdf:resource="&cinema;PrixMeilleureMusiqueFilm"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixMeilleureContributionTechnique -->
+
+    <owl:Class rdf:about="&cinema;PrixMeilleureContributionTechnique">
+        <rdfs:label xml:lang="en">best technical contribution award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix de la meilleure contribution technique</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixTechnique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixMeilleureDirectionArtistique -->
+
+    <owl:Class rdf:about="&cinema;PrixMeilleureDirectionArtistique">
+        <rdfs:label xml:lang="en">best artistic direction award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix de la meilleure direction artistique</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixDirection"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixMeilleureMiseEnScene -->
+
+    <owl:Class rdf:about="&cinema;PrixMeilleureMiseEnScene">
+        <rdfs:label xml:lang="en">best staging award </rdfs:label>
+        <rdfs:label xml:lang="fr">prix de la meilleure mise en scène</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixDirection"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixMeilleureMusique -->
+
+    <owl:Class rdf:about="&cinema;PrixMeilleureMusique">
+        <rdfs:label xml:lang="en">best music award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix musique</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixTechnique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixMeilleureMusiqueFilm -->
+
+    <owl:Class rdf:about="&cinema;PrixMeilleureMusiqueFilm">
+        <rdfs:label xml:lang="en">best film song award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix de la meilleure musique de film</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixMeilleureMusique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixMeilleurePhotographie -->
+
+    <owl:Class rdf:about="&cinema;PrixMeilleurePhotographie">
+        <rdfs:label xml:lang="en">best photography award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix de la meilleure photographie</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixTechnique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixMeilleureProduction -->
+
+    <owl:Class rdf:about="&cinema;PrixMeilleureProduction">
+        <rdfs:label xml:lang="en">best production award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix de la meilleure production</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixDirection"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixMeilleureRealisation -->
+
+    <owl:Class rdf:about="&cinema;PrixMeilleureRealisation">
+        <rdfs:label xml:lang="en">best realisation award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix de la meilleure réalisation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixDirection"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixMeilleursCostumes -->
+
+    <owl:Class rdf:about="&cinema;PrixMeilleursCostumes">
+        <rdfs:label xml:lang="en">best costume award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix des meilleurs costumes</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixMeilleursCostumesEtDecors"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixMeilleursCostumesEtDecors -->
+
+    <owl:Class rdf:about="&cinema;PrixMeilleursCostumesEtDecors">
+        <rdfs:label xml:lang="en">costume and scenography award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix costumes et décors</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixTechnique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixMeilleursEffetsVisuels -->
+
+    <owl:Class rdf:about="&cinema;PrixMeilleursEffetsVisuels">
+        <rdfs:label xml:lang="en">best visual effects award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix des meilleurs effets visuels</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixTechnique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixMeriteScientifiqueOuTechnique -->
+
+    <owl:Class rdf:about="&cinema;PrixMeriteScientifiqueOuTechnique">
+        <rdfs:label xml:lang="en">scientific or technical merit award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix du mérite scientifique ou technique</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixTechnique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixMichelOrnano -->
+
+    <owl:Class rdf:about="&cinema;PrixMichelOrnano">
+        <rdfs:label xml:lang="en">Michel Ornano award</rdfs:label>
+        <rdfs:label xml:lang="fr">Michel Ornano</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixSpecifiqueFestivalDeDeauville"/>
+        <owl:disjointWith rdf:resource="&cinema;PrixRevelationCartier"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixMiseEnSceneUnCertainRegard -->
+
+    <owl:Class rdf:about="&cinema;PrixMiseEnSceneUnCertainRegard">
+        <rdfs:label xml:lang="fr">prix de la mise en scène un certain regard</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;UnCertainRegard"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixOeuvreCinematographique -->
+
+    <owl:Class rdf:about="&cinema;PrixOeuvreCinematographique">
+        <rdfs:label xml:lang="en">cinematographic work award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix oeuvre cinématographique</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixDecerne"/>
+        <rdfs:comment>pourrait être un film</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixRevelationCartier -->
+
+    <owl:Class rdf:about="&cinema;PrixRevelationCartier">
+        <rdfs:label xml:lang="en">Cartier revelation award</rdfs:label>
+        <rdfs:label xml:lang="fr">Révélation Cartier</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixSpecifiqueFestivalDeDeauville"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixScenario -->
+
+    <owl:Class rdf:about="&cinema;PrixScenario">
+        <rdfs:label xml:lang="en">award for scenario</rdfs:label>
+        <rdfs:label xml:lang="fr">prix pour scénario</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixDirection"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixScientifiqueEtIngenierie -->
+
+    <owl:Class rdf:about="&cinema;PrixScientifiqueEtIngenierie">
+        <rdfs:label xml:lang="en">scientific and engineering award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix scientifique et ingénierie</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixTechnique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixSpecialJuryUnCertainRegard -->
+
+    <owl:Class rdf:about="&cinema;PrixSpecialJuryUnCertainRegard">
+        <rdfs:label xml:lang="fr">prix spécial du jury un certain regard</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;UnCertainRegard"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixSpecifique -->
+
+    <owl:Class rdf:about="&cinema;PrixSpecifique">
+        <rdfs:label xml:lang="en">specific award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix spécifique</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixOeuvreCinematographique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixSpecifiqueCeremonieCesar -->
+
+    <owl:Class rdf:about="&cinema;PrixSpecifiqueCeremonieCesar">
+        <rdfs:label xml:lang="en">Césars ceremony award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix spécifique à la cérémonie des Césars</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixSpecifique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixSpecifiqueFestivalDeDeauville -->
+
+    <owl:Class rdf:about="&cinema;PrixSpecifiqueFestivalDeDeauville">
+        <rdfs:label xml:lang="en">Deauville film festival award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix Specifique au festival de Deauville</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixSpecifique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixSpecifiqueFestivaleDeCannes -->
+
+    <owl:Class rdf:about="&cinema;PrixSpecifiqueFestivaleDeCannes">
+        <rdfs:label xml:lang="en">Cannes film festival award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix spécifique au festival de Cannes</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixSpecifique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixTechnique -->
+
+    <owl:Class rdf:about="&cinema;PrixTechnique">
+        <rdfs:label xml:lang="en">technical award</rdfs:label>
+        <rdfs:label xml:lang="fr">prix technique</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixArtiste"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PrixUnCertainRegard -->
+
+    <owl:Class rdf:about="&cinema;PrixUnCertainRegard">
+        <rdfs:label xml:lang="fr">prix un certain regard</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;UnCertainRegard"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Regisseur -->
+
+    <owl:Class rdf:about="&cinema;Regisseur">
+        <rdfs:label xml:lang="en">manager</rdfs:label>
+        <rdfs:label xml:lang="fr">régisseur</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Role -->
+
+    <owl:Class rdf:about="&cinema;Role">
+        <rdfs:label xml:lang="en">character</rdfs:label>
+        <rdfs:label xml:lang="en">role</rdfs:label>
+        <rdfs:label xml:lang="fr">personnage</rdfs:label>
+        <rdfs:label xml:lang="fr">rôle</rdfs:label>
+        <rdfs:comment>entité apparaissant dans une oeuvre (une personne fictive ou réelle, un animal, un végétal, le soleil...)</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#RoleDAnimal -->
+
+    <owl:Class rdf:about="&cinema;RoleDAnimal">
+        <rdfs:label xml:lang="en">animal role</rdfs:label>
+        <rdfs:label xml:lang="fr">rôle d&apos;animal</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;Role"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#RoleDeChien -->
+
+    <owl:Class rdf:about="&cinema;RoleDeChien">
+        <rdfs:label xml:lang="en">dog role</rdfs:label>
+        <rdfs:label xml:lang="fr">rôle de chien</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;RoleDAnimal"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#RoleDeCommissaire -->
+
+    <owl:Class rdf:about="&cinema;RoleDeCommissaire">
+        <rdfs:label xml:lang="en">commissioner role</rdfs:label>
+        <rdfs:label xml:lang="fr">rôle de commissaire</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;Role"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#RolePrincipal -->
+
+    <owl:Class rdf:about="&cinema;RolePrincipal">
+        <rdfs:label xml:lang="en">starring role</rdfs:label>
+        <rdfs:label xml:lang="fr">premier rôle</rdfs:label>
+        <rdfs:label xml:lang="fr">rôle principal</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;Role"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#RoleSecondaire -->
+
+    <owl:Class rdf:about="&cinema;RoleSecondaire">
+        <rdfs:label xml:lang="en">supporting role</rdfs:label>
+        <rdfs:label xml:lang="fr">rôle secondaire</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;Role"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Sexe -->
+
+    <owl:Class rdf:about="&cinema;Sexe">
+        <rdfs:label xml:lang="en">gender</rdfs:label>
+        <rdfs:label xml:lang="fr">sexe</rdfs:label>
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:oneOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cinema;Feminin"/>
+                    <rdf:Description rdf:about="&cinema;Masculin"/>
+                </owl:oneOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Technicolor -->
+
+    <owl:Class rdf:about="&cinema;Technicolor">
+        <rdfs:label xml:lang="fr">Technicolor</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;TechniqueDePriseDeVue"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Technique -->
+
+    <owl:Class rdf:about="&cinema;Technique">
+        <rdfs:label xml:lang="fr">technique</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#TechniqueDAnimation -->
+
+    <owl:Class rdf:about="&cinema;TechniqueDAnimation">
+        <rdfs:label xml:lang="en">animation technique</rdfs:label>
+        <rdfs:label xml:lang="fr">technique d’animation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;Technique"/>
+        <rdfs:comment xml:lang="fr">taxonomie ici: http://fr.wikipedia.org/wiki/Animations#Techniques_d.27animation</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#TechniqueDAnimation2DNumerique -->
+
+    <owl:Class rdf:about="&cinema;TechniqueDAnimation2DNumerique">
+        <rdfs:label xml:lang="en">2D digital animation technique</rdfs:label>
+        <rdfs:label xml:lang="fr">technique d&apos;animation en 2D numérique</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;TechniqueDImageDeSynthese"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#TechniqueDAnimation3D -->
+
+    <owl:Class rdf:about="&cinema;TechniqueDAnimation3D">
+        <rdfs:label xml:lang="en">3D animation technique</rdfs:label>
+        <rdfs:label xml:lang="fr">technique d&apos;animation 3D</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;TechniqueDImageDeSynthese"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#TechniqueDImageDeSynthese -->
+
+    <owl:Class rdf:about="&cinema;TechniqueDImageDeSynthese">
+        <rdfs:label xml:lang="en">image synthesis technique</rdfs:label>
+        <rdfs:label xml:lang="fr">technique d&apos;image de synthèse</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;TechniqueDAnimation"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#TechniqueDePriseDeSon -->
+
+    <owl:Class rdf:about="&cinema;TechniqueDePriseDeSon">
+        <rdfs:label xml:lang="fr">technique de prise de son</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;Technique"/>
+        <rdfs:comment xml:lang="en">sound recording technique</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#TechniqueDePriseDeVue -->
+
+    <owl:Class rdf:about="&cinema;TechniqueDePriseDeVue">
+        <rdfs:label xml:lang="en">camerawork technique</rdfs:label>
+        <rdfs:label xml:lang="en">shooting technique</rdfs:label>
+        <rdfs:label xml:lang="fr">technique de prise de vue</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;Technique"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#TechniqueDuDessinAnime -->
+
+    <owl:Class rdf:about="&cinema;TechniqueDuDessinAnime">
+        <rdfs:label xml:lang="en">animated cartoon technique</rdfs:label>
+        <rdfs:label xml:lang="en">cartoon technique
+	
+</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;TechniqueDAnimation"/>
+        <rdfs:comment xml:lang="fr">dessin animé</rdfs:comment>
+        <rdfs:comment xml:lang="fr">technique du dessin animé</rdfs:comment>
+        <rdfs:comment xml:lang="fr">technique d’animation permettant de donner l’illusion du mouvement par des prises de vue successives d’images dessinées</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#TroisiemePrixCinefondation -->
+
+    <owl:Class rdf:about="&cinema;TroisiemePrixCinefondation">
+        <rdfs:label xml:lang="en">third cinéfondation prize</rdfs:label>
+        <rdfs:label xml:lang="fr">troisième prix Cinéfondation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;Cinefondation"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#UnCertainRegard -->
+
+    <owl:Class rdf:about="&cinema;UnCertainRegard">
+        <rdfs:label xml:lang="fr">un certain regard</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;PrixSpecifiqueFestivaleDeCannes"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Ville -->
+
+    <owl:Class rdf:about="&cinema;Ville">
+        <rdfs:label xml:lang="en">city</rdfs:label>
+        <rdfs:label xml:lang="fr">ville</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cinema;LieuAdministratif"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/2002/07/owl#Thing -->
+
+    <owl:Class rdf:about="&owl;Thing"/>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/Person -->
+
+    <owl:Class rdf:about="&foaf;Person"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#AbstractionLyrique -->
+
+    <owl:Thing rdf:about="&cinema;AbstractionLyrique">
+        <rdf:type rdf:resource="&cinema;CourantCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Action -->
+
+    <owl:Thing rdf:about="&cinema;Action">
+        <rdf:type rdf:resource="&cinema;GenreCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#AlleMachtDerSuper8 -->
+
+    <owl:Thing rdf:about="&cinema;AlleMachtDerSuper8">
+        <rdf:type rdf:resource="&cinema;CourantCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Amerique -->
+
+    <owl:Thing rdf:about="&cinema;Amerique">
+        <rdf:type rdf:resource="&cinema;AireGeographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Aventure -->
+
+    <owl:Thing rdf:about="&cinema;Aventure">
+        <rdf:type rdf:resource="&cinema;GenreCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Cannes -->
+
+    <owl:Thing rdf:about="&cinema;Cannes">
+        <rdf:type rdf:resource="&cinema;Ville"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+        <rdfs:label xml:lang="fr">Cannes</rdfs:label>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Catastrophe -->
+
+    <owl:Thing rdf:about="&cinema;Catastrophe">
+        <rdf:type rdf:resource="&cinema;GenreCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#CinemaDirect -->
+
+    <owl:Thing rdf:about="&cinema;CinemaDirect">
+        <rdf:type rdf:resource="&cinema;CourantCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#CinemaModerne -->
+
+    <owl:Thing rdf:about="&cinema;CinemaModerne">
+        <rdf:type rdf:resource="&cinema;CourantCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#CinemaPur -->
+
+    <owl:Thing rdf:about="&cinema;CinemaPur">
+        <rdf:type rdf:resource="&cinema;CourantCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#CinemaUnderground -->
+
+    <owl:Thing rdf:about="&cinema;CinemaUnderground">
+        <rdf:type rdf:resource="&cinema;CourantCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#ClermontFerrand -->
+
+    <owl:Thing rdf:about="&cinema;ClermontFerrand">
+        <rdf:type rdf:resource="&cinema;Ville"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+        <rdfs:label xml:lang="fr">Clermont-Ferrand</rdfs:label>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Comedie -->
+
+    <owl:Thing rdf:about="&cinema;Comedie">
+        <rdf:type rdf:resource="&cinema;GenreCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#ComedieALItalienne -->
+
+    <owl:Thing rdf:about="&cinema;ComedieALItalienne">
+        <rdf:type rdf:resource="&cinema;CourantCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Deauville -->
+
+    <owl:Thing rdf:about="&cinema;Deauville">
+        <rdf:type rdf:resource="&cinema;Ville"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+        <rdfs:label xml:lang="fr">Deauville</rdfs:label>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Documentaire -->
+
+    <owl:Thing rdf:about="&cinema;Documentaire">
+        <rdf:type rdf:resource="&cinema;GenreCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Dogme95 -->
+
+    <owl:Thing rdf:about="&cinema;Dogme95">
+        <rdf:type rdf:resource="&cinema;CourantCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Drame -->
+
+    <owl:Thing rdf:about="&cinema;Drame">
+        <rdf:type rdf:resource="&cinema;GenreCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#EcoleDeBarcelone -->
+
+    <owl:Thing rdf:about="&cinema;EcoleDeBarcelone">
+        <rdf:type rdf:resource="&cinema;CourantCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#EcoleDeBerlin -->
+
+    <owl:Thing rdf:about="&cinema;EcoleDeBerlin">
+        <rdf:type rdf:resource="&cinema;CourantCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Expressionnisme -->
+
+    <owl:Thing rdf:about="&cinema;Expressionnisme">
+        <rdf:type rdf:resource="&cinema;CourantCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Fantastique -->
+
+    <owl:Thing rdf:about="&cinema;Fantastique">
+        <rdf:type rdf:resource="&cinema;GenreCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Feminin -->
+
+    <owl:Thing rdf:about="&cinema;Feminin">
+        <rdf:type rdf:resource="&cinema;Sexe"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+        <rdfs:label xml:lang="fr">Feminin</rdfs:label>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#FilmNoir -->
+
+    <owl:Thing rdf:about="&cinema;FilmNoir">
+        <rdf:type rdf:resource="&cinema;CourantCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#France -->
+
+    <owl:Thing rdf:about="&cinema;France">
+        <rdf:type rdf:resource="&cinema;Pays"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+        <rdfs:label xml:lang="fr">France</rdfs:label>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#FreeCinema -->
+
+    <owl:Thing rdf:about="&cinema;FreeCinema">
+        <rdf:type rdf:resource="&cinema;CourantCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Guerre -->
+
+    <owl:Thing rdf:about="&cinema;Guerre">
+        <rdf:type rdf:resource="&cinema;GenreCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Horreur -->
+
+    <owl:Thing rdf:about="&cinema;Horreur">
+        <rdf:type rdf:resource="&cinema;GenreCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Kammerspiel -->
+
+    <owl:Thing rdf:about="&cinema;Kammerspiel">
+        <rdf:type rdf:resource="&cinema;CourantCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Kino -->
+
+    <owl:Thing rdf:about="&cinema;Kino">
+        <rdf:type rdf:resource="&cinema;CourantCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Masculin -->
+
+    <owl:Thing rdf:about="&cinema;Masculin">
+        <rdf:type rdf:resource="&cinema;Sexe"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+        <rdfs:label xml:lang="fr">Masculin</rdfs:label>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Mumblecore -->
+
+    <owl:Thing rdf:about="&cinema;Mumblecore">
+        <rdf:type rdf:resource="&cinema;CourantCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Neorealisme -->
+
+    <owl:Thing rdf:about="&cinema;Neorealisme">
+        <rdf:type rdf:resource="&cinema;CourantCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#NewFrenchExtremism -->
+
+    <owl:Thing rdf:about="&cinema;NewFrenchExtremism">
+        <rdf:type rdf:resource="&cinema;CourantCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#NonNarration -->
+
+    <owl:Thing rdf:about="&cinema;NonNarration">
+        <rdf:type rdf:resource="&cinema;CourantCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#NouveauCinemaAllemand -->
+
+    <owl:Thing rdf:about="&cinema;NouveauCinemaAllemand">
+        <rdf:type rdf:resource="&cinema;CourantCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#NouvelHollywood -->
+
+    <owl:Thing rdf:about="&cinema;NouvelHollywood">
+        <rdf:type rdf:resource="&cinema;CourantCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#NouvelleVague -->
+
+    <owl:Thing rdf:about="&cinema;NouvelleVague">
+        <rdf:type rdf:resource="&cinema;CourantCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Oucipo -->
+
+    <owl:Thing rdf:about="&cinema;Oucipo">
+        <rdf:type rdf:resource="&cinema;CourantCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#PremiereAvantGarde -->
+
+    <owl:Thing rdf:about="&cinema;PremiereAvantGarde">
+        <rdf:type rdf:resource="&cinema;CourantCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#RealismePoetique -->
+
+    <owl:Thing rdf:about="&cinema;RealismePoetique">
+        <rdf:type rdf:resource="&cinema;CourantCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#RenouveauDuCinemaQuebecois -->
+
+    <owl:Thing rdf:about="&cinema;RenouveauDuCinemaQuebecois">
+        <rdf:type rdf:resource="&cinema;CourantCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Romance -->
+
+    <owl:Thing rdf:about="&cinema;Romance">
+        <rdf:type rdf:resource="&cinema;GenreCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#RésistanceDesCorps -->
+
+    <owl:Thing rdf:about="&cinema;RésistanceDesCorps">
+        <rdf:type rdf:resource="&cinema;CourantCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#ScienceFiction -->
+
+    <owl:Thing rdf:about="&cinema;ScienceFiction">
+        <rdf:type rdf:resource="&cinema;GenreCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#TelephoneBlanc -->
+
+    <owl:Thing rdf:about="&cinema;TelephoneBlanc">
+        <rdf:type rdf:resource="&cinema;CourantCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.irit.fr/recherches/MELODI/ontologies/FilmographieV1.owl#Western -->
+
+    <owl:Thing rdf:about="&cinema;Western">
+        <rdf:type rdf:resource="&cinema;GenreCinematographique"/>
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+    </owl:Thing>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="&cinema;PrixMeilleurActeur"/>
+            <rdf:Description rdf:about="&cinema;PrixMeilleurActeurSecondRole"/>
+            <rdf:Description rdf:about="&cinema;PrixMeilleurEspoirFeminin"/>
+            <rdf:Description rdf:about="&cinema;PrixMeilleurEspoirMasculin"/>
+            <rdf:Description rdf:about="&cinema;PrixMeilleureActrice"/>
+            <rdf:Description rdf:about="&cinema;PrixMeilleureActriceSecondRole"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="&cinema;CameraOr"/>
+            <rdf:Description rdf:about="&cinema;Cinefondation"/>
+            <rdf:Description rdf:about="&cinema;UnCertainRegard"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="&cinema;GrandPrix"/>
+            <rdf:Description rdf:about="&cinema;PrixCritiqueInternationale"/>
+            <rdf:Description rdf:about="&cinema;PrixFilmdAnimation"/>
+            <rdf:Description rdf:about="&cinema;PrixHonneur"/>
+            <rdf:Description rdf:about="&cinema;PrixJury"/>
+            <rdf:Description rdf:about="&cinema;PrixMeilleurFilm"/>
+            <rdf:Description rdf:about="&cinema;PrixMeilleurPremierFilm"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="&cinema;PrixMiseEnSceneUnCertainRegard"/>
+            <rdf:Description rdf:about="&cinema;PrixSpecialJuryUnCertainRegard"/>
+            <rdf:Description rdf:about="&cinema;PrixUnCertainRegard"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="&cinema;DeuxiemePrixCinefondation"/>
+            <rdf:Description rdf:about="&cinema;PremierPrixCinefondation"/>
+            <rdf:Description rdf:about="&cinema;TroisiemePrixCinefondation"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="&cinema;PrixMeilleurScenario"/>
+            <rdf:Description rdf:about="&cinema;PrixMeilleurScenarioOriginal"/>
+            <rdf:Description rdf:about="&cinema;PrixMeilleurScenarioOriginalOuAdaptation"/>
+            <rdf:Description rdf:about="&cinema;PrixMeilleureAdaptation"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="&cinema;PrixMeilleurDecor"/>
+            <rdf:Description rdf:about="&cinema;PrixMeilleurMaquillage"/>
+            <rdf:Description rdf:about="&cinema;PrixMeilleursCostumes"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="&cinema;PrixDirection"/>
+            <rdf:Description rdf:about="&cinema;PrixInterpretation"/>
+            <rdf:Description rdf:about="&cinema;PrixTechnique"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="&cinema;PrixSpecifiqueCeremonieCesar"/>
+            <rdf:Description rdf:about="&cinema;PrixSpecifiqueFestivalDeDeauville"/>
+            <rdf:Description rdf:about="&cinema;PrixSpecifiqueFestivaleDeCannes"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="&cinema;PrixMeilleureDirectionArtistique"/>
+            <rdf:Description rdf:about="&cinema;PrixMeilleureMiseEnScene"/>
+            <rdf:Description rdf:about="&cinema;PrixMeilleureProduction"/>
+            <rdf:Description rdf:about="&cinema;PrixMeilleureRealisation"/>
+            <rdf:Description rdf:about="&cinema;PrixScenario"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="&cinema;FestivalDeCannes"/>
+            <rdf:Description rdf:about="&cinema;FestivalDeClermontFerrand"/>
+            <rdf:Description rdf:about="&cinema;FestivalDeDeauville"/>
+            <rdf:Description rdf:about="&cinema;FestivalDuReel"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="&cinema;PrixMeilleurMontage"/>
+            <rdf:Description rdf:about="&cinema;PrixMeilleurSon"/>
+            <rdf:Description rdf:about="&cinema;PrixMeilleureAffiche"/>
+            <rdf:Description rdf:about="&cinema;PrixMeilleureContributionTechnique"/>
+            <rdf:Description rdf:about="&cinema;PrixMeilleureMusique"/>
+            <rdf:Description rdf:about="&cinema;PrixMeilleurePhotographie"/>
+            <rdf:Description rdf:about="&cinema;PrixMeilleursCostumesEtDecors"/>
+            <rdf:Description rdf:about="&cinema;PrixMeilleursEffetsVisuels"/>
+            <rdf:Description rdf:about="&cinema;PrixMeriteScientifiqueOuTechnique"/>
+            <rdf:Description rdf:about="&cinema;PrixScientifiqueEtIngenierie"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="&cinema;Feminin"/>
+            <rdf:Description rdf:about="&cinema;Masculin"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.5.0) http://owlapi.sourceforge.net -->
+

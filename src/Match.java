@@ -212,7 +212,7 @@ public class Match {
         List<List<String>> queriz_results = new ArrayList<>();
         List<String> query_results;
         List<String> queriz = Arrays.asList("Q1","Q2","Q3","Q4","Q5","Q6","Q7","Q8","Q9");
-        String path_queriz = "data/Queriz/";
+        String path_queriz = "data/truncated_queriz/";
         String path_qrels = "data/qrels/";
         HashMap<String,Boolean> docToRelevance;
         String query;
