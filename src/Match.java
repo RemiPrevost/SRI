@@ -129,7 +129,7 @@ public class Match {
                         }
                     }
                 }
-                System.out.println(main_list.get(index_main).get(index_docs).getName()+" : "+sum(doc_weights)*bonus);
+                //System.out.println(main_list.get(index_main).get(index_docs).getName()+" : "+sum(doc_weights)*bonus);
                 if (this.method.equals("sum")) {
                     final_docs.add(new Document(main_list.get(index_main).get(index_docs).getName(),sum(doc_weights)*bonus));
                 }
@@ -160,9 +160,6 @@ public class Match {
                     Map map_values = ((BasicDBObject) map_docs.get(key)).toMap();
                     list_doc.add(new Document(key.toString(),Double.parseDouble(map_values.get(this.weight).toString())));
                 }
-            }
-            else {
-                System.out.println("ERROR, token "+ token + "not found in collection");
             }
         }
         finally {
@@ -272,9 +269,13 @@ public class Match {
         p10=(relDocsFrom5to10/5)/(float)queriz_results.size();
         p25=(relDocsFrom10to25/15)/(float)queriz_results.size();
 
-        System.out.println("p5: "+p5);
+        System.out.print(p5+",");
+        System.out.print(p10+",");
+        System.out.print(p25+"\n");
+
+        /*System.out.println("p5: "+p5);
         System.out.println("p10: "+p10);
         System.out.println("p25: "+p25);
-        System.out.println("Ponderation : "+ponderation);
+        System.out.println("Ponderation : "+ponderation);*/
     }
 }

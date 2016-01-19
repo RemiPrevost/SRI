@@ -89,7 +89,6 @@ public class Main {
                 }
             }
 
-
             for (String several_words: inner_elements) {
                 tab_words = several_words.split("[.,;:?!'\\[\\]«»<>= -/[\\xA0][\\x5C][\\u2019][\\u2026][\\x5F]]+");
                 for (String word: tab_words) {

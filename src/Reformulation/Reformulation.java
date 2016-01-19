@@ -1,11 +1,13 @@
 package Reformulation;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * Created by remiprevost on 16/01/2016.
@@ -15,12 +17,12 @@ public class Reformulation {
     private List<String> tokens_synonym = new ArrayList<>();
     private List<String> tokens_link = new ArrayList<>();
     private SparqlClient sparqlClient = new SparqlClient("localhost:3030/space");
-    private String folder_path = "data/original_queriz/";
     private String file_name;
 
     public Reformulation(String file_name) throws IOException{
         BufferedReader buff;
-        buff =  new BufferedReader(new FileReader(this.folder_path +file_name));
+        String folder_path = "data/original_queriz/";
+        buff =  new BufferedReader(new FileReader(folder_path +file_name));
         this.file_name = file_name;
         try {
             String line;
@@ -30,6 +32,8 @@ public class Reformulation {
         } finally {
             buff.close();
         }
+
+        System.out.println(tokens_in);
     }
 
     public void expandTokens() {
@@ -40,7 +44,70 @@ public class Reformulation {
     }
 
     public void writeQuery() {
+        String folder_new_path = "data/expanded_queriz/";
+        List<String> to_write = new ArrayList<>();
+        List<String> tokens_synonym_splitted = new ArrayList<>();
+        List<String> tokens_link_splitted = new ArrayList<>();
+        Function<String,String> weight1 = x -> x+",1";
+        Function<String,String> truncate = x -> x.length() >= 8 ? x.substring(0,8) : x;
 
+        for (String several_words : tokens_in) {
+            to_write.addAll(split(several_words.toLowerCase()));
+        }
+        to_write = to_write.stream().map(truncate).collect(Collectors.toList());
+        to_write = to_write.stream().map(weight1).collect(Collectors.toList());
+
+        for (String several_words : tokens_synonym) {
+            tokens_synonym_splitted.addAll(split(several_words.toLowerCase()));
+        }
+        tokens_synonym = tokens_synonym_splitted.stream().map(truncate).collect(Collectors.toList());
+
+        for (String several_words : tokens_synonym) {
+            tokens_synonym_splitted.addAll(split(several_words.toLowerCase()));
+        }
+        tokens_link = tokens_synonym_splitted.stream().map(truncate).collect(Collectors.toList());
+
+        for (String token_synonym : tokens_synonym) {
+            if (!contains(to_write,token_synonym)) {
+                to_write.add(token_synonym+",0.5");
+            }
+        }
+
+        for (String token_link : tokens_link) {
+            if (!contains(to_write,token_link)) {
+                to_write.add(token_link+",0.5");
+            }
+        }
+
+        PrintWriter writer = null;
+        try {
+            writer = new PrintWriter(folder_new_path+file_name, "UTF-8");
+            for(String token : to_write) {
+                writer.println(token);
+            }
+            writer.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private boolean contains(List<String> to_write, String token) {
+        Pattern p;
+
+        for (String token_to_write : to_write) {
+            p = Pattern.compile(token+",(1|0.5)");
+            if (p.matcher(token_to_write).matches()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private List<String> split(String several_words) {
+        return Arrays.asList(several_words.split("[.,;:?!'\\[\\]«»<>= -/[\\xA0][\\x5C][\\u2019][\\u2026][\\x5F]]+"));
     }
 
     private void synonymMethod(String token) {
@@ -134,12 +201,8 @@ public class Reformulation {
     }
 
     public static void main(String[] args) throws Exception {
-        Reformulation reformulation = new Reformulation("Q1");
-        List<String> list =  new ArrayList<>();
-        list.add("Omar Sy");
-        list.add("Trappes");
-        reformulation.linkMethod(list);
-        //reformulation.expandTokens();
+        Reformulation reformulation = new Reformulation("Q9");
+        reformulation.expandTokens();
         reformulation.writeQuery();
     }
 }

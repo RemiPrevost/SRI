@@ -1,0 +1,14 @@
+Il peut être nécessaire d'attribuer les droits d'exécution à certains fichiers
+$ cd /path/to/fuseki
+$ chmod +x fuseki-server s-*
+Pour démarrer le serveur, exécuter le script fuseki-server en spécifiant le fichier de configuration config.ttl
+$ ./fuseki-server --config=config.ttl
+(pas testé sous Windows, mais cela devrait fonctionner aussi avec fuseki-server.bat)
+le port utilisé par défaut est 3030. Si vous voulez en utiliser un autre, spécifiez-le en paramètre:
+$ ./fuseki-server --config=config.ttl --port=8080
+une fois le serveur lancé, rendez-vous avec votre navigateur sur http://localhost:3030
+suivez le lien Control Panel, puis sélectionnez le jeu de données que vous souhaitez interroger (il n'y en a normalement qu'un seul), et validez.
+La page suivante vous permet de faire les requêtes (section SPARQL Query) et les mises à jour (section SPARQL Update).
+Au démarrage du serveur, le jeu de données est vide. Uploadez le fichier spaceOntology.ttl dans la section File upload.
+Vous pouvez maintenant effectuer des requêtes ou des mises à jour.
+En cas de mauvaise manipulation, vous pouvez supprimer tous les triplets en redémarrant le serveur ou bien en envoyant la requête d'update "DROP ALL", puis en uploadant à nouveau le fichier spaceOntology.ttl.
